@@ -37,6 +37,7 @@ function init() {
 	// setup sticky header menu
 	setupStickyHeader();
 	// kick off graphic code
+	console.log("hererere");
 	graphic.init();
 }
 

@@ -3,7 +3,10 @@
 function resize() {}
 
 function init() {
-	console.log('Make something awesome!');
+	const data = d3.csv("assets/data/df.csv")
+	console.log(data);
+	console.log("jere");
+
 }
 
 export default { init, resize };
