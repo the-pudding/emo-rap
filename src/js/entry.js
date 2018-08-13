@@ -38,7 +38,6 @@ function init() {
 	// setup sticky header menu
 	setupStickyHeader();
 	// kick off graphic code
-	d3.select("body").style("background","red");
 	graphic.init();
 }
 
