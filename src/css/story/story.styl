@@ -2,14 +2,38 @@
 
 .emo-index
   font-family 'Atlas Grotesk Web'
+  position relative
+  padding-bottom 1000px
+  svg
+    margin 0 auto
+    display block
+    overflow visible
+  .face-div
+    position absolute
+    top 0px
+    left 0px
+    right 0px
+    margin 0 auto
+    pointer-events none
+    .face-container
+      .face-img
+        background-image url(assets/images/faces.png)
+        margin 0 auto
+        background-size cover
+  .axis-head-line
+    stroke #D7D7D7
+    shape-rendering crispEdges
+  .axis-head
+    font-size 15px
+  .emo-head
+    fill #28115A
+  .hip-hop-head
+    fill #18604F
   .axis-percent
     font-size 15px
     font-weight 600
     dominant-baseline hanging
     alignment-baseline hanging
-    &:last-of-type
-      dominant-baseline text-after-edge
-      alignment-baseline text-after-edge
     tspan
       &:first-of-type
         text-shadow 1px 1px 0px white, 1px 0px 0px white, 0px 1px 0px white, -1px 0px 0px white, 0px -1px 0px white, 0px 0px 0px white, -1px -1px 0px white, -1px 1px 0px white, 1px -1px 0px white
@@ -20,7 +44,18 @@
   .axis-text
     font-size 11px
     font-weight 500
+  .emo-band-hover-percent
+    font-size 12px
+    font-weight 500
+    text-anchor middle
+    fill #545454
+    display none
   .rect-g
+    rect
+      pointer-events all
+      cursor hand
+      cursor pointer
+      visibility hidden
     .rap-rect
       fill rgba(24,96,79,.1)
     .emo-rect
@@ -32,6 +67,7 @@
   .emo-artist
     fill #28115A
   .emo-index-band
+    pointer-events none
     .album-index
       font-size 12px
       font-family 'Atlas Grotesk Web'

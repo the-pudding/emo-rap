@@ -3,6 +3,9 @@
 function resize() {}
 
 function init() {
+
+	var controller = new ScrollMagic.Controller();
+
 	const dataUploaded = d3.csv("assets/data/df.csv",function(data){
 
 	const emoBands = ["dashboard","radiohead","takingback","chemicalromance","fall out boy","jimmyeatworld","paramore","brandnew"];
@@ -134,24 +137,51 @@ function init() {
 	const margin = {"top":100,"bottom":0,"left":0,"right":0};
 	const width = 960-margin.left-margin.top;
 	const height = 700-margin.top-margin.bottom;
+	const container = d3.select(".emo-index");
 
-  const svg = d3.select(".emo-index").append("svg")
-			.attr("width", width)
-			.attr("height", height)
-      .style("width", "100%")
-      .style("height", "auto")
+  const svg = container.append("svg")
+			.attr("width", width+margin.left+margin.right)
+			.attr("height", height+margin.bottom+margin.top)
+			.style("width", width+margin.left+margin.right+"px")
+			.style("height", height+margin.bottom+margin.top+"px")
 			;
 
+	let rectWidth = 25
 	let maxAmount = .19
 	let minAmount = .03
+	var roundAmount = 150
 
   const yScale = d3.scaleLinear().domain([minAmount,maxAmount]).range([height,0]);
+
+	const faceDiv = container.append("div")
+		.attr("class","face-div")
+		.style("width", width+margin.left+margin.right+"px")
+		.style("height", height+margin.bottom+margin.top+"px")
+		.style("margin-top",margin.top+"px")
+		;
+
+	let faceImage = faceDiv.append("div")
+		.attr("class","face-container")
+		.append("div")
+		.attr("class","face-img")
+		.attr("id","trigger")
+		.style("width",function(d){
+			return rectWidth+5+"px"
+		})
+		.style("height",(+rectWidth+5)+"px")
+		.style("background-position-x","-243px")
+		.style("top",function(d){
+			var spacing = yScale(Math.round(d3.max(data,function(d){return +d.percents;})*roundAmount)/roundAmount)+"px";
+			return spacing;
+		})
+		.style("transform","translate(0,calc(-50% - 4px))")
+		;
+
   const toRemove = ["nothing_ruiner","deathgrips"];
   let dataFiltered = data
 		.filter(function(d){ return toRemove.indexOf(d.artist) == -1})
 		;
 
-	var roundAmount = 150
 
 	let dataNested = d3.nest()
 		.key(function(d){
@@ -167,14 +197,14 @@ function init() {
 		.entries(dataFiltered)
 		;
 
+
   let g = svg
 		.append("g")
 		.attr("transform","translate("+margin.left+","+margin.top+")")
 		.append("g")
-		.attr("transform","translate(500,0)")
+		.attr("transform","translate("+(width/2 - rectWidth/2)+",0)")
 		;
 
-	let rectWidth = 25
 
 	g.append("rect")
 		.attr("width",rectWidth)
@@ -265,17 +295,33 @@ function init() {
 		;
 
 	percentGs
+		// .filter(function(d){
+		// 	return emoBands.indexOf(d.values[0].artist) > -1
+		// })
+		.append("g")
+		.append("text")
+		.attr("class","emo-band-hover-percent")
+		.attr("x",rectWidth/2)
+		.attr("y",function(d,i){
+			return yScale(Math.round(+d.key*roundAmount)/roundAmount);
+		})
+		.text(function(d){
+			return Math.round(d.key*100)+"%";
+		})
+		;
+
+	percentGs
 		.each(function(d){
 			var arrayOffset = [];
 			var arrayHeight = [];
-			d3.select(this).selectAll("text").each(function(d){
+			d3.select(this).selectAll(".emo-index-band").each(function(d){
 				arrayOffset.push(d3.select(this).node().getBBox().width);
 				arrayHeight.push(d3.select(this).node().getBBox().height);
 			});
 
 			d.offsetAmount = arrayOffset;
 
-			d3.select(this).selectAll("text").each(function(d,i){
+			d3.select(this).selectAll(".emo-index-band").each(function(d,i){
 				var count = i;
 				var direction = 1;
 				var offsetRect = rectWidth+10
@@ -308,6 +354,12 @@ function init() {
 						.attr("y",function(d,i){
 							return yScale(Math.round(+percents*roundAmount)/roundAmount) - (arrayHeight[count]/2 + 6);
 						})
+						.on("mouseover",function(d){
+							showPercent(d3.select(this.parentNode.parentNode))
+						})
+						.on("mouseout",function(d){
+							hidePercent(d3.select(this.parentNode.parentNode))
+						})
 						;
 
 					d3.select(this).attr("x",offsetRect+direction*arrayOffset[count-1]+additionalSpacing*direction)
@@ -333,6 +385,12 @@ function init() {
 						})
 						.attr("y",function(d,i){
 							return yScale(Math.round(+percents*roundAmount)/roundAmount) - (arrayHeight[count]/2 + 6);
+						})
+						.on("mouseover",function(d){
+							showPercent(d3.select(this.parentNode.parentNode))
+						})
+						.on("mouseout",function(d){
+							hidePercent(d3.select(this.parentNode.parentNode))
 						})
 						;
 
@@ -360,12 +418,24 @@ function init() {
 						.attr("y",function(d,i){
 							return yScale(Math.round(+percents*roundAmount)/roundAmount) - (arrayHeight[count]/2 + 6);
 						})
+						.on("mouseover",function(d){
+							showPercent(d3.select(this.parentNode.parentNode))
+						})
+						.on("mouseout",function(d){
+							hidePercent(d3.select(this.parentNode.parentNode))
+						})
 						;
 
 
 					d3.select(this).attr("x",offsetRect);
 				}
 
+				function showPercent(element){
+					element.select(".emo-band-hover-percent").style("display","block");
+				}
+				function hidePercent(element){
+					element.select(".emo-band-hover-percent").style("display",null);
+				}
 
 			});
 		})
@@ -423,11 +493,13 @@ function init() {
 		})
 		;
 
-	axisText
+	var maxSad = axisText
 		.append("text")
 		.attr("x",0)
 		.attr("y",4)
 		.attr("class","axis-percent")
+
+	maxSad
 		.selectAll("tspan")
 		.data([Math.round(maxAmount*100)+"%","Sad"])
 		.enter()
@@ -450,6 +522,8 @@ function init() {
 		.attr("x",0)
 		.attr("y",height-17)
 		.attr("class","axis-percent")
+		.style("alignment-baseline","text-after-edge")
+		.style("dominant-baseline","text-after-edge")
 		.selectAll("tspan")
 		.data([Math.round(minAmount*100)+"%","Sad"])
 		.enter()
@@ -467,10 +541,67 @@ function init() {
 		})
 		;
 
+	var emoHeadText = axisText
+		.append("text")
+		.attr("x",rectWidth+10)
+		.attr("y",0)
+		.attr("class","axis-head emo-head")
+		.text("Emo Bands (third wave, 00s - 10s)")
+		;
+
+	var hipHopText = axisText
+		.append("text")
+		.attr("x",-10)
+		.attr("y",0)
+		.attr("class","axis-head hip-hop-head")
+		.text("Emo-Hip Hop")
+		.attr("text-anchor","end")
+		;
+
+	axisText
+		.append("line")
+		.attr("x1",rectWidth+10)
+		.attr("x2", emoHeadText.node().getBBox().width+10+rectWidth+10)
+		.attr("y1",5)
+		.attr("y2",5)
+		.attr("class","axis-head-line")
+		;
+
+	axisText
+		.append("line")
+		.attr("x1",-10)
+		.attr("x2", -hipHopText.node().getBBox().width-10-(10))
+		.attr("y1",5)
+		.attr("y2",5)
+		.attr("class","axis-head-line")
+		;
+
+	var element = "#trigger"
+	var progress = 0;
+	var scaleFaces = d3.scaleQuantize().domain([0,1]).range(d3.range(9));
+	var scene = new ScrollMagic.Scene({
+			triggerElement: element
+			,duration: yScale(Math.round(.04815714285714286*roundAmount)/roundAmount) - yScale(Math.round(d3.max(data,function(d){return +d.percents;})*roundAmount)/roundAmount)
+			,triggerHook:.5
+		})
+		.setPin(element, {pushFollowers: false})
+		// .addIndicators({name: "1 (duration: 300)"}) // add indicators (requires plugin)
+		.addTo(controller)
+		.on("progress",function(e){
+			var progressOnScroll = Math.round(e.progress*100)/100;
+			if(progressOnScroll != progress){
+				progress = progressOnScroll
+			}
+			faceImage
+				.style("background-position-x",(-243+(scaleFaces(progress))*30.375)+"px")
+
+			console.log();
+
+		})
+		;
+
+
 	});
-
-
-
 
 }
 
