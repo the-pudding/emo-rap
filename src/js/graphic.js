@@ -428,12 +428,15 @@ function init() {
 								.attr("class","tool-tip-head")
 								.html(function(d){
 									return "<span>Track Sadness of</span> "+crossWalk[artist].album
-								})
-							toolTipEmoIndex.selectAll("div")
+								});
+
+							var toolTipTracks = toolTipEmoIndex.selectAll(".tool-tip-track")
 								.data(tracksByArtist.get(artist).values)
 								.enter()
 								.append("div")
 								.attr("class","tool-tip-track")
+
+							toolTipTracks
 								.selectAll("div")
 								.data(function(d){
 									return [d.track_title, Math.round(d.pct_sad*100)+"%"];
@@ -446,7 +449,7 @@ function init() {
 									}
 									return "tool-tip-track-percent"
 								})
-								.text(function(d,i){
+								.html(function(d,i){
 									if(d.length > 30){
 										return d.slice(0,27)+"..."
 									}
@@ -460,6 +463,18 @@ function init() {
 										else{
 											return "#28115A"
 										}
+									}
+								})
+								;
+
+							toolTipTracks.filter(function(d,i){
+									return i==0;
+								})
+								.selectAll("div")
+								.each(function(d,i){
+									if(i==1){
+										var percent = d3.select(this).text();
+										d3.select(this).html(percent+" <span>sad words</span>")
 									}
 								})
 								;
