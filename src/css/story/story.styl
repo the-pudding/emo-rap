@@ -4,6 +4,37 @@
   font-family 'Atlas Grotesk Web'
   position relative
   padding-bottom 1000px
+  .tool-tip
+    background white
+    box-shadow 2px 2px 10px rgba(0, 0, 0, 0.10)
+    border-radius 3px
+    width auto
+    padding 7px
+    position absolute
+    top 0px
+    left 0px
+    z-index 1000
+    .tool-tip-head
+      font-size 14px
+      font-weight 500
+      margin-bottom 5px
+      border-bottom 1px solid #ccc
+      padding-bottom 3px
+      span
+        font-weight 400
+    .tool-tip-track
+      display flex
+      font-size 12px
+      .tool-tip-track-track
+        color black
+        font-size 12px
+        font-weight 500
+      .tool-tip-track-percent
+        color #666
+        font-weight 500
+        margin-left 5px
+
+
   svg
     margin 0 auto
     display block
@@ -20,6 +51,18 @@
         background-image url(assets/images/faces.png)
         margin 0 auto
         background-size cover
+        position relative
+        .face-img-percent
+          font-size 12px
+          width 100px
+          text-align center
+          margin 0 auto
+          margin-top 10px
+          position absolute
+          top 0px
+          left 0px
+          right 0px
+
   .axis-head-line
     stroke #D7D7D7
     shape-rendering crispEdges
@@ -55,7 +98,7 @@
       pointer-events all
       cursor hand
       cursor pointer
-      visibility hidden
+      //visibility hidden
     .rap-rect
       fill rgba(24,96,79,.1)
     .emo-rect
