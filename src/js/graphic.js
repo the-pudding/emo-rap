@@ -4,6 +4,78 @@ function resize() {}
 
 function init() {
 
+	var lucidDreamsAudio = document.getElementById("lucid-dreams");
+
+	d3.select(".audio-controls").on("click",function(d){
+		lucidDreamsAudio.play();
+	})
+
+	var rightCol = d3.select(".right-col");
+
+	var trackLines = [
+		"I don&rsquo;t really care if you cry",
+		"On the real, you shoulda never lied",
+		"Shoulda saw the way she looked me in my eyes",
+		"She said, Baby, I am not afraid to die",
+		"Push me to the edge",
+		"All my friends are dead"
+	];
+
+	rightCol.append("p")
+		.attr("class","track-name")
+		.append("span")
+		.text("Lil Uzi Vert - XO Tour Llif3");
+
+	var wordList = ["care","cry","real","lied","looked","eyes","baby","afraid","die","Push","edge","friends","dead"];
+	var sadWords = ["cry","die","afraid","die","dead"];
+
+	rightCol.append("div")
+		.attr("class","track-content")
+		.selectAll("p")
+		.data(trackLines)
+		.enter()
+		.append("p")
+		.attr("class","track-line")
+		.selectAll("span")
+		.data(function(d){
+			return d.split(" ");
+		})
+		.enter()
+		.append("span")
+		.attr("class","track-word")
+		.classed("big-word",function(d){
+			if(wordList.indexOf(d) > -1){
+				return true
+			}
+			return false;
+		})
+		.classed("sad-word",function(d){
+			if(sadWords.indexOf(d) > -1){
+				return true
+			}
+			return false;
+		})
+		.html(function(d){
+			return d;
+		});
+
+	var results = rightCol.append("div")
+		.attr("class","results")
+
+	results.append("p")
+		.attr("class","percent")
+		.html(function(){
+			return "<span>38%</span> sad"
+		})
+
+	results.append("p")
+		.attr("class","break-down")
+		.html(function(){
+			return "<span>5 sad words</span> of <b>13</b> total words"
+		})
+
+
+
 	var controller = new ScrollMagic.Controller();
 
 	const dataUploaded = d3.csv("assets/data/df.csv",function(data){
@@ -142,7 +214,7 @@ function init() {
 			  }
 			}
 
-			const margin = {"top":100,"bottom":0,"left":0,"right":0};
+			const margin = {"top":50,"bottom":0,"left":0,"right":0};
 			const width = 960-margin.left-margin.top;
 			const height = 700-margin.top-margin.bottom;
 			const container = d3.select(".emo-index");

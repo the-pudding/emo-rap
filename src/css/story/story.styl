@@ -1,126 +1,266 @@
 /* CUSTOM STORY STYLE */
 
-.emo-index
-  font-family 'Atlas Grotesk Web'
+
+.chart-title
+  font-size 24px
+  font-family $atlas
+  text-align center
+  margin-bottom 0px
+  font-weight 600
+.prose
+  font-family $atlas
+  font-size 16px
+  font-weight 400
+  color #111
+  width 633px
+  padding 0px
+  margin 0 auto
+  margin-bottom 1.5rem
+
+.prose-big
+  font-size 18px
+
+.sad-word
+  color $sadBlue
+  font-weight 600
+
+body
+  background $backgroundColor
+
+header
+  background $backgroundColor
+
+.small-text
+  font-size 12px
+
+.explanation
+  width 633px
+  margin 0 auto
+  margin-top 50px
   position relative
-  padding-bottom 1000px
-  .tool-tip
-    background white
-    box-shadow 2px 2px 10px rgba(0, 0, 0, 0.10)
-    border-radius 3px
-    width auto
-    padding 7px
+  .left-col
+    width 300px
+    .prose
+      width 100%
+  .right-col
     position absolute
+    left 320px
+    font-family $atlas
     top 0px
-    left 0px
-    z-index 1000
-    .tool-tip-head
+    .track-name
+      margin 0px
       font-size 14px
-      font-weight 500
-      margin-bottom 5px
-      border-bottom 1px solid #ccc
-      padding-bottom 3px
       span
-        font-weight 400
-    .tool-tip-track
+        font-family $atlas
+        margin 0
+        color #666666
+        border-bottom 2px solid #EBEBEB
+        padding-bottom 5px
+    .track-content
+      margin-top 30px
+      .track-line
+        line-height 5px
+        .track-word
+          margin-right 4px
+          color rgba(0,0,0,.4)
+          font-size 18px
+          &:last-of-type
+            margin 0px
+        .big-word
+          font-size 21px
+          color black
+          font-weight 600
+        .sad-word
+          color $sadBlue
+    .results
       display flex
-      font-size 12px
-      .tool-tip-track-track
-        color black
-        font-size 12px
-        font-weight 500
-      .tool-tip-track-percent
-        color #666
-        font-weight 500
-        margin-left 5px
+      margin-top 40px
+      .break-down
+        margin 0
         span
-          font-size 10px
-          color #666
+          color $sadBlue
+          margin 0px
+          font-weight 600
+          font-size 16px
 
-
-  svg
-    margin 0 auto
-    display block
-    overflow visible
-  .face-div
-    position absolute
-    top 0px
-    left 0px
-    right 0px
-    margin 0 auto
-    pointer-events none
-    .face-container
-      .face-img
-        background-image url(assets/images/faces.png)
-        margin 0 auto
-        background-size cover
-        position relative
-        .face-img-percent
-          font-size 12px
-          width 100px
-          text-align center
-          margin 0 auto
-          margin-top 10px
-          position absolute
-          top 0px
-          left 0px
-          right 0px
-
-  .axis-head-line
-    stroke #D7D7D7
-    shape-rendering crispEdges
-  .axis-head
-    font-size 15px
-  .emo-head
-    fill #28115A
-  .hip-hop-head
-    fill #18604F
-  .axis-percent
-    font-size 15px
-    font-weight 600
-    dominant-baseline hanging
-    alignment-baseline hanging
-    tspan
-      &:first-of-type
-        text-shadow 1px 1px 0px white, 1px 0px 0px white, 0px 1px 0px white, -1px 0px 0px white, 0px -1px 0px white, 0px 0px 0px white, -1px -1px 0px white, -1px 1px 0px white, 1px -1px 0px white
-        letter-spacing -.4px
-      &:last-of-type
-        font-size 12px
-        font-weight 300
-  .axis-text
-    font-size 11px
-    font-weight 500
-  .emo-band-hover-percent
-    font-size 12px
-    font-weight 500
-    text-anchor middle
-    fill #545454
-    display none
-  .rect-g
-    rect
-      pointer-events all
-      cursor hand
-      cursor pointer
-      //visibility hidden
-    .rap-rect
-      fill rgba(24,96,79,.1)
-    .emo-rect
-      fill rgba(40,17,90,.1)
-  .emo-index-axis
-    fill #EDEDED
-  .hip-hop-artist
-    fill #18604F
-  .emo-artist
-    fill #28115A
-  .emo-index-band
-    pointer-events none
-    .album-index
-      font-size 12px
-      font-family 'Atlas Grotesk Web'
-      fill #3e3d3d
-      padding-left 10px
-    .artist-index
+      .percent
+        color $sadBlue
+        margin 0px
+        font-weight 600
+        font-size 16px
+        margin-right 10px
+        padding-right 10px
+        border-right 3px solid #D2D2D2
+        span
+          background $sadBlueBackground
+          padding 2px 5px
+          margin-right 4px
+.song-quote
+  font-family $atlas
+  max-width 550px
+  margin 0 auto
+  margin-top 2rem
+  display flex
+  margin-bottom 2rem
+  .audio-controls
+    width 60px
+    cursor hand
+    cursor pointer
+    background #ECECEC
+    border-radius 5px
+    padding 10px 0px
+    height 60px
+    margin-top 5px
+    margin-right 15px
+    p
+      text-transform capitalize
+      pointer-events none
+      font-family $atlas
       font-size 15px
-      font-family 'Atlas Grotesk Web'
+      width 100%
+      text-align center
+      margin-top -10px
+      //line-height 10px
+    svg
+      width 100%
+      pointer-events none
+      polygon
+        fill black
+
+  audio
+    width 250px
+    margin-top 20px
+
+  p
+    margin 0
+    font-size 18px
+    span
+      //background $lightBlue
+      padding .05em 0
+      font-weight 600
+.emo-index-wrapper
+  margin-top 50px
+  .emo-index
+    font-family 'Atlas Grotesk Web'
+    position relative
+    padding-bottom 1000px
+    .tool-tip
+      background white
+      box-shadow 2px 2px 10px rgba(0, 0, 0, 0.10)
+      border-radius 3px
+      width auto
+      padding 7px
+      position absolute
+      top 0px
+      left 0px
+      z-index 1000
+      .tool-tip-head
+        font-size 14px
+        font-weight 500
+        margin-bottom 5px
+        border-bottom 1px solid #ccc
+        padding-bottom 3px
+        span
+          font-weight 400
+      .tool-tip-track
+        display flex
+        font-size 12px
+        .tool-tip-track-track
+          color black
+          font-size 12px
+          font-weight 500
+        .tool-tip-track-percent
+          color #666
+          font-weight 500
+          margin-left 5px
+          span
+            font-size 10px
+            color #666
+
+
+    svg
+      margin 0 auto
+      display block
+      overflow visible
+    .face-div
+      position absolute
+      top 0px
+      left 0px
+      right 0px
+      margin 0 auto
+      pointer-events none
+      .face-container
+        .face-img
+          background-image url(assets/images/faces.png)
+          margin 0 auto
+          background-size cover
+          position relative
+          .face-img-percent
+            font-size 12px
+            width 100px
+            text-align center
+            margin 0 auto
+            margin-top 10px
+            position absolute
+            top 0px
+            left 0px
+            right 0px
+
+    .axis-head-line
+      stroke #D7D7D7
+      shape-rendering crispEdges
+    .axis-head
+      font-size 15px
+    .emo-head
+      fill #28115A
+    .hip-hop-head
+      fill #18604F
+    .axis-percent
+      font-size 15px
+      font-weight 600
+      dominant-baseline hanging
+      alignment-baseline hanging
+      tspan
+        &:first-of-type
+          text-shadow 1px 1px 0px white, 1px 0px 0px white, 0px 1px 0px white, -1px 0px 0px white, 0px -1px 0px white, 0px 0px 0px white, -1px -1px 0px white, -1px 1px 0px white, 1px -1px 0px white
+          letter-spacing -.4px
+        &:last-of-type
+          font-size 12px
+          font-weight 300
+    .axis-text
+      font-size 11px
       font-weight 500
-      letter-spacing -.4px
+    .emo-band-hover-percent
+      font-size 12px
+      font-weight 500
+      text-anchor middle
+      fill #545454
+      display none
+    .rect-g
+      rect
+        pointer-events all
+        cursor hand
+        cursor pointer
+        //visibility hidden
+      .rap-rect
+        fill rgba(24,96,79,.1)
+      .emo-rect
+        fill rgba(40,17,90,.1)
+    .emo-index-axis
+      fill #EDEDED
+    .hip-hop-artist
+      fill #18604F
+    .emo-artist
+      fill #28115A
+    .emo-index-band
+      pointer-events none
+      .album-index
+        font-size 12px
+        font-family 'Atlas Grotesk Web'
+        fill #3e3d3d
+        padding-left 10px
+      .artist-index
+        font-size 15px
+        font-family 'Atlas Grotesk Web'
+        font-weight 500
+        letter-spacing -.4px

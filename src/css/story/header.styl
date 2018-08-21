@@ -16,16 +16,16 @@ header
 			fill $off-black
 			display block
 			width 100%
-	
+
 header.is-sticky
-	position fixed
+	//position fixed
 	transform translate3d(0,0,0)
-	background-color $white
-	box-shadow 0 0 7px 1px $gray-light
-	
+
 	a.logo
-		margin 0 auto
-	
+		margin 0
+		margin-left 2rem
+		margin-top .3rem
+
 	.header__toggle
 		position fixed
 		transform translate3d(0,0,0)
@@ -37,13 +37,13 @@ header.is-sticky
 		z-index set-index(overlay)
 		svg
 			stroke $off-black
-		
+
 		span
 			&:first-of-type
 				display block
 			&:last-of-type
 				display none
-		
+
 		&.is-visible span
 			&:first-of-type
 				display none
@@ -122,8 +122,7 @@ header.is-sticky.is-dark
 	.header__toggle
 		svg
 			stroke $off-white
-		
+
 		&.is-visible span
 			svg
 				stroke $off-black
-				
