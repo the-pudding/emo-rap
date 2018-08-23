@@ -6,8 +6,67 @@ function init() {
 
 	var lucidDreamsAudio = document.getElementById("lucid-dreams");
 
-	d3.select(".audio-controls").on("click",function(d){
-		lucidDreamsAudio.play();
+	var audioControls = d3.select(".audio-controls")
+
+	var scaleTime = d3.scaleThreshold().domain([0,3,5.8,8.45,12.34,15,18,20.6,100]).range([0,1,2,3,4,5,6,7,8,9]);
+
+	var lucidLines = d3.select(".verses").selectAll("p");
+	var timerObject;
+
+	audioControls.on("click",function(d){
+		if(lucidDreamsAudio.paused){
+			lucidDreamsAudio.play();
+			audioControls.select(".volume-on").style("display","none");
+			audioControls.select(".volume-off").style("display","block");
+			audioControls.select(".play-text").text("Pause");
+			d3.select(".verses").classed("playing",true);
+			timerObject = d3.timer(function(elapsed) {
+
+				var rows = scaleTime(lucidDreamsAudio.currentTime)-1;
+				lucidLines.style("color",function(d,i){
+					var row = i
+					if(rows == -1){
+						return null
+					}
+					if(rows == row){
+						d3.select(this).classed("show-face",true);
+						if(rows == 7){
+							d3.select(this).select(".verse-face").style("background-position-x","-243px");
+						}
+						else{
+							d3.select(this).select(".verse-face").style("background-position-x",-243+((8-rows)*30.375)+"px");
+						}
+
+
+					}
+					else{
+						d3.select(this).classed("show-face",false);
+					}
+					if(rows >= row){
+						return null
+					}
+					return "#dfdfdf"
+				})
+  			if (lucidDreamsAudio.currentTime > 22.8){
+					timerObject.stop()
+					d3.select(".verses").classed("playing",false);
+					audioControls.select(".volume-on").style("display","block");
+					audioControls.select(".volume-off").style("display","none");
+					audioControls.select(".play-text").text("Play");
+					lucidLines.style("color",null);
+				};
+			}, 150);
+
+		}
+		else{
+			lucidDreamsAudio.pause();
+			audioControls.select(".volume-on").style("display","block");
+			audioControls.select(".volume-off").style("display","none");
+			audioControls.select(".play-text").text("Play");
+			timerObject.stop()
+			d3.select(".verses").classed("playing",false);
+			lucidLines.style("color",null);
+		}
 	})
 
 	var rightCol = d3.select(".right-col");
@@ -227,6 +286,7 @@ function init() {
 					;
 
 			let rectWidth = 25
+			let rectWidthGap = 14;
 			let maxAmount = .19
 			let minAmount = .03
 			var roundAmount = 150
@@ -406,13 +466,13 @@ function init() {
 					d3.select(this).selectAll(".emo-index-band").each(function(d,i){
 						var count = i;
 						var direction = 1;
-						var offsetRect = rectWidth+10
+						var offsetRect = rectWidth+rectWidthGap
 						var additionalSpacing = 12;
 						var percents = d.percents;
 						var artist = d.artist;
 						if(emoBands.indexOf(d.artist) == -1){
 							direction = -1;
-							var offsetRect = -10
+							var offsetRect = -rectWidthGap
 						}
 						if(i==1){
 
@@ -473,6 +533,12 @@ function init() {
 								.append("rect")
 								.attr("width",arrayOffset[count]+8)
 								.attr("height",arrayHeight[0]+4)
+								// .style("visibility",function(d){
+								// 	if(artist == "dashboard" || artist == "juicewrld"){
+								// 		return "visible"
+								// 	}
+								// 	return "hidden"
+								// })
 								.attr("class",function(d){
 									if(emoBands.indexOf(artist) == -1){
 										return "rap-rect"
@@ -695,25 +761,25 @@ function init() {
 
 			var emoHeadText = axisText
 				.append("text")
-				.attr("x",rectWidth+10)
+				.attr("x",rectWidth+rectWidthGap)
 				.attr("y",0)
 				.attr("class","axis-head emo-head")
-				.text("Emo Bands (third wave, 00s - 10s)")
+				.text("Emo Bands (third wave, ‘00s - ‘10s)")
 				;
 
 			var hipHopText = axisText
 				.append("text")
-				.attr("x",-10)
+				.attr("x",-rectWidthGap)
 				.attr("y",0)
 				.attr("class","axis-head hip-hop-head")
-				.text("Emo-Hip Hop")
+				.text("Emo-rap / Hip Hop")
 				.attr("text-anchor","end")
 				;
 
 			axisText
 				.append("line")
-				.attr("x1",rectWidth+10)
-				.attr("x2", emoHeadText.node().getBBox().width+10+rectWidth+10)
+				.attr("x1",rectWidth+rectWidthGap)
+				.attr("x2", emoHeadText.node().getBBox().width+rectWidthGap+rectWidth+rectWidthGap)
 				.attr("y1",5)
 				.attr("y2",5)
 				.attr("class","axis-head-line")
@@ -721,8 +787,8 @@ function init() {
 
 			axisText
 				.append("line")
-				.attr("x1",-10)
-				.attr("x2", -hipHopText.node().getBBox().width-10-(10))
+				.attr("x1",-rectWidthGap)
+				.attr("x2", -hipHopText.node().getBBox().width-rectWidthGap-(rectWidthGap))
 				.attr("y1",5)
 				.attr("y2",5)
 				.attr("class","axis-head-line")

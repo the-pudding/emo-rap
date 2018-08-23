@@ -10,18 +10,23 @@
 	</p>
 	<div class="song-quote">
 		<div class="audio-controls">
-			@@include('volume-2.svg')
-			<p>play</p>
+			<div class="volume-on">
+				@@include('volume-2.svg')
+			</div>
+			<div class="volume-off">
+				@@include('volume-x.svg')
+			</div>
+			<p class="play-text">play</p>
 		</div>
 		<div class="verses">
-			<p><span>I still see your shadows in my room</span></p>
-			<p><span>Can&rsquo;t take back the love that I gave you</span></p>
-			<p><span>It&rsquo;s to the point where I love and I hate you</span></p>
-			<p><span>And I cannot change you, so I must replace you, oh</span></p>
-			<p><span>Easier said than done, I thought you were the one</span></p>
-			<p><span>Listenin&rsquo; to my heart instead of my head</span></p>
-			<p><span>You found another one, but I am the better one</span></p>
-			<p><span>I won't let you forget me</span></p>
+			<p><span class="highlight-span">I still see your shadows in my room</span><span class="verse-face"></span></p>
+			<p><span class="highlight-span">Can&rsquo;t take back the love that I gave you</span><span class="verse-face"></span></p>
+			<p><span class="highlight-span">It&rsquo;s to the point where I love and I hate you</span><span class="verse-face"></span></p>
+			<p><span class="highlight-span">And I cannot change you, so I must replace you, oh</span><span class="verse-face"></span></p>
+			<p><span class="highlight-span">Easier said than done, I thought you were the one</span><span class="verse-face"></span></p>
+			<p><span class="highlight-span">Listenin&rsquo; to my heart instead of my head</span><span class="verse-face"></span></p>
+			<p><span class="highlight-span">You found another one, but I am the better one</span><span class="verse-face"></span></p>
+			<p><span class="highlight-span">I won't let you forget me</span><span class="verse-face"></span></p>
 		</div>
 		<audio preload id="lucid-dreams">
 			<source src="assets/audio/hook.mp3" type="audio/mpeg">
@@ -35,7 +40,7 @@
 	</p>
 	<div class="explanation">
 		<div class="left-col">
-			<p class="prose">We’ll replicate a clever method used to find Radiohead’s saddest track: take each song’s lyrics and calculate the percentage of words classified as <span class="sad-word">sad</span>.
+			<p class="prose">We’ll replicate a clever method used to find <a href="http://www.rcharlie.com/post/fitter-happier/">Radiohead’s saddest track</a>: take each song’s lyrics and calculate the percentage of words classified as <span class="sad-word">sad</span>.
 			</p>
 			<p class="prose">Here’s an example from Lil Uzi Vert’s “XO Tour Llif3”, where there are 13 words* in its morbidly depressing chorus, with 5 classified as <span class="sad-word">sad</span>. These bars are 38% sad, which—all things considered—is a high number.
 			</p>
@@ -47,7 +52,7 @@
 
 		</div>
 	</div>
-	<p class="prose prose-big">Now let’s look at how emo-rappers (and a few other non-sad hip-hop artists as benchmarks) stack up against Dashboard.
+	<p class="prose prose-big">Now let’s look at how emo-rappers stack up against Dashboard (as well as some  non-sad hip-hop for good measure).
 	</p>
 	<div class="emo-index-wrapper">
 		<p class="chart-title">Average of Album’s Track Lyrics that are Sad*

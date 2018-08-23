@@ -36,8 +36,9 @@ header
 .explanation
   width 633px
   margin 0 auto
-  margin-top 50px
+  margin-top 4rem
   position relative
+  margin-bottom 3rem
   .left-col
     width 300px
     .prose
@@ -112,6 +113,12 @@ header
     height 60px
     margin-top 5px
     margin-right 15px
+    .volume-on
+      display block
+    .volume-off
+      display none
+    &:hover
+      background #bbb
     p
       text-transform capitalize
       pointer-events none
@@ -126,7 +133,10 @@ header
       pointer-events none
       polygon
         fill black
-
+  .playing
+    .show-face
+      .verse-face
+        display inline-block
   audio
     width 250px
     margin-top 20px
@@ -134,7 +144,18 @@ header
   p
     margin 0
     font-size 18px
-    span
+    transition color 1s
+    .verse-face
+      background-image url("assets/images/faces.png")
+      margin 0 auto
+      background-size cover
+      position absolute
+      width 30px
+      height 30px
+      background-position-x -243px
+      margin-left 10px
+      display none
+    .highlight-span
       //background $lightBlue
       padding .05em 0
       font-weight 600
@@ -210,7 +231,7 @@ header
       stroke #D7D7D7
       shape-rendering crispEdges
     .axis-head
-      font-size 15px
+      font-size 16px
     .emo-head
       fill #28115A
     .hip-hop-head
