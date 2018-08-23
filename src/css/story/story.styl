@@ -1,12 +1,62 @@
 /* CUSTOM STORY STYLE */
 
+.saddest-songs
+  display flex
+  flex-direction column
+  height 530px
+  width 900px
+  flex-wrap wrap
+  .saddest-song-track
+    margin 0
+    font-family $atlas
+    width 400px
+    //background-color rgba(24,96,79,.1)
+    margin-right 0rem
+    font-weight 500
+    font-size 12px
+    color #18604F
+    position relative
+    border-bottom 1px solid #ccc
+    &:first-of-type
+      .saddest-song-track-percent
+        &:after
+          content 'sad'
+          position absolute
+          margin-left 5px
+          font-weight 500
+    .saddest-song-track-count
+      font-family $atlas
+      color #999
+      font-weight 600
+      font-size 11px
+      width 30px
+      margin-right 4px
+    .saddest-song-track-title
+      color #666
+      font-size 12px
+      font-family $atlas
+      text-transform capitalize
+      font-weight 500
+    .saddest-song-track-percent
+      color #000
+      font-size 12px
+      font-family $atlas
+      text-transform capitalize
+      font-weight 400
+      position absolute
+      right 0px
+      top 0px
+  .emo-top-song
+    color #28115A
+    //background-color rgba(40,17,90,.1)
+
 
 .chart-title
-  font-size 24px
-  font-family $atlas
+  font-size 30px
+  font-family $futura
   text-align center
   margin-bottom 0px
-  font-weight 600
+  text-transform lowercase
 .prose
   font-family $atlas
   font-size 16px
@@ -175,6 +225,7 @@ header
       top 0px
       left 0px
       z-index 1000
+      display none
       .tool-tip-head
         font-size 14px
         font-weight 500
@@ -231,7 +282,9 @@ header
       stroke #D7D7D7
       shape-rendering crispEdges
     .axis-head
-      font-size 16px
+      font-size 18px
+      font-family $futura
+      text-transform uppercase
     .emo-head
       fill #28115A
     .hip-hop-head
@@ -276,12 +329,14 @@ header
     .emo-index-band
       pointer-events none
       .album-index
-        font-size 12px
-        font-family 'Atlas Grotesk Web'
-        fill #3e3d3d
+        font-size 13px
+        font-family $futura
+        fill #6b6b6b
+        text-transform lowercase
         padding-left 10px
       .artist-index
         font-size 15px
-        font-family 'Atlas Grotesk Web'
+        font-family $futura
+        text-transform uppercase
         font-weight 500
-        letter-spacing -.4px
+        letter-spacing 0px

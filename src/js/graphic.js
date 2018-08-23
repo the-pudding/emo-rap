@@ -140,15 +140,26 @@ function init() {
 	const dataUploaded = d3.csv("assets/data/df.csv",function(data){
 		const tracksUploaded = d3.csv("assets/data/tracks.csv",function(trackData){
 
+			const toRemove = ["nothing_ruiner","deathgrips"];
+
 
 			let topTracks = trackData.sort(function(a,b){
 				return +b.pct_sad - +a.pct_sad;
-			});
+			})
+			.filter(function(d){
+				return toRemove.indexOf(d.artist) == -1
+			})
+			;
 
 			let tracksByArtist = d3.map(d3.nest().key(function(d){ return d.artist; })
-				.entries(trackData),function(d){return d.key});
+				.entries(topTracks),function(d){return d.key});
 
-			const emoBands = ["dashboard","radiohead","takingback","chemicalromance","fall out boy","jimmyeatworld","paramore","brandnew"];
+			console.log(topTracks);
+
+
+
+
+			const emoBands = ["black_parade","dashboard","radiohead","takingback","chemicalromance","fall out boy","jimmyeatworld","paramore","brandnew"];
 
 		  const crossWalk = {
 			  "dashboard": {
@@ -167,6 +178,10 @@ function init() {
 				  "artist": "My Chemical Romance",
 		  		"album": "Three Cheers..."
 			  },
+				"black_parade": {
+					"artist": "My Chemical Romance",
+					"album": "The Black Parade"
+				},
 		    "fall out boy": {
 				  "artist": "Fall Out Boy",
 		  		"album": "From Under the Cork Tree"
@@ -179,6 +194,10 @@ function init() {
 				  "artist": "Brand New",
 		  		"album": "Deja Entendu"
 			  },
+				"where_you": {
+					"artist": "Taking Back Sunday",
+					"album": "Where You Want To Be"
+				},
 		    "paramore": {
 				  "artist": "Paramore",
 		  		"album": "Riot"
@@ -287,8 +306,8 @@ function init() {
 
 			let rectWidth = 25
 			let rectWidthGap = 14;
-			let maxAmount = .19
-			let minAmount = .03
+			let maxAmount = .22
+			let minAmount = .01
 			var roundAmount = 150
 
 		  const yScale = d3.scaleLinear().domain([minAmount,maxAmount]).range([height,0]);
@@ -319,7 +338,6 @@ function init() {
 				.style("transform","translate(0,calc(-50% - 4px))")
 				;
 
-		  const toRemove = ["nothing_ruiner","deathgrips"];
 
 		  let dataFiltered = data
 				.filter(function(d){ return toRemove.indexOf(d.artist) == -1})
@@ -494,7 +512,7 @@ function init() {
 									return offsetRect+direction*arrayOffset[count-1]+additionalSpacing*direction-4
 								})
 								.attr("y",function(d,i){
-									return yScale(Math.round(+percents*roundAmount)/roundAmount) - (arrayHeight[count]/2 + 6);
+									return yScale(Math.round(+percents*roundAmount)/roundAmount) - (arrayHeight[count]/2 + 7);
 								})
 								;
 
@@ -520,7 +538,7 @@ function init() {
 									return offsetRect+direction*(arrayOffset[count-1]+arrayOffset[count-2])+additionalSpacing*direction*2
 								})
 								.attr("y",function(d,i){
-									return yScale(Math.round(+percents*roundAmount)/roundAmount) - (arrayHeight[count]/2 + 6);
+									return yScale(Math.round(+percents*roundAmount)/roundAmount) - (arrayHeight[count]/2 + 7);
 								})
 								;
 
@@ -552,7 +570,7 @@ function init() {
 									return offsetRect-4
 								})
 								.attr("y",function(d,i){
-									return yScale(Math.round(+percents*roundAmount)/roundAmount) - (arrayHeight[count]/2 + 6);
+									return yScale(Math.round(+percents*roundAmount)/roundAmount) - (arrayHeight[count]/2 + 7);
 								})
 								;
 
@@ -809,6 +827,28 @@ function init() {
 					return Math.round(progressMap(progress)*100)+"%";
 				})
 				;
+
+			var saddestSongsContainer = d3.select(".saddest-songs");
+			saddestSongsContainer.selectAll("p")
+				.data(topTracks.slice(0,50))
+				.enter()
+				.append("p")
+				.attr("class",function(d){
+					if(emoBands.indexOf(d.artist) == -1){
+						return "saddest-song-track rap-top-song"
+					}
+					return "saddest-song-track emo-top-song"
+				})
+
+				.html(function(d,i){
+					var artistInfo = crossWalk[d.artist]
+					var suffix = "%"
+					var trackTitle = d.track_title;
+					if(trackTitle.length > 25){
+						trackTitle = trackTitle.slice(0,22)+"..."
+					}
+					return "<span class='saddest-song-track-count'>"+(i+1)+".</span>"+artistInfo["artist"] +" - <span class='saddest-song-track-title'>"+trackTitle+"</span><span class='saddest-song-track-percent'>"+Math.round(d.pct_sad*100)+suffix+"</span>"
+				});
 
 			var scene = new ScrollMagic.Scene({
 					triggerElement: element
