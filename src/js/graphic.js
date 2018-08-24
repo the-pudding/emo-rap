@@ -80,12 +80,95 @@ function init() {
 		"All my friends are dead"
 	];
 
+	var fullSong = [
+		"Are you alright?",
+		"I'm alright, I'm quite alright",
+		"And my money's right",
+		"8… (yeah)",
+		"Countin' them bands",
+		"All way to the top 'til they be fallin' over",
+		"(Yeah, yeah, yeah)",
+		"Countin' them bands",
+		"On my way to the top 'til we fallin' over",
+		"",
+		"I don't really care if you cry",
+		"On the real, you shoulda never lied",
+		"Shoulda saw the way she looked me in my eyes",
+		"She said, 'Baby, I am not afraid to die'",
+		"Push me to the edge",
+		"All my friends are dead",
+		"Push me to the edge",
+		"All my friends are dead",
+		'Push me to the edge',
+		"All my friends are dead",
+		"Push me to the edge",
+		"",
+		"Phantom that's all red, inside all white",
+		"Like somethin' you ride a sled down, I just want that head",
+		"My Brittany got mad, I'm barely her man now",
+		"Everybody got the same swag now",
+		"Watch the way that I tear it down",
+		"Stackin' my bands all the way to the top",
+		"All the way 'til my bands fallin' over",
+		"Every time that you leave your spot",
+		"Your girlfriend call me like, 'Come on over!'",
+		"I like the way that she treat me",
+		"Gon' leave you, won't leave me, I call it that Casanova",
+		"She say I'm insane, yeah",
+		"I might blow my brain out (hey)",
+		"Xanny, help the pain, yeah",
+		"Please, Xanny, make it go away",
+		"I'm committed, not addicted, but it keep control of me",
+		"All the pain, now I can't feel it",
+		"I swear that it's slowin' me, yeah",
+		"",
+		"I don't really care if you cry",
+		"On the real, you shoulda never lied",
+		"Saw the way she looked me in my eyes",
+		"She said: 'I am not afraid to die.'",
+		"All my friends are dead",
+		"Push me to the edge (yeah)",
+		"All my friends are dead, yeah, ooh",
+		"Push me to the edge",
+		"All my friends are dead, yeah",
+		"All my friends are dead, yeah",
+		"",
+		"That is not your swag, I swear you fake hard",
+		"Now these niggas wanna take my cadence",
+		"Rain on 'em, thunderstorm, rain on 'em (ooh, yeah)",
+		"Medicine, lil' nigga, take some (yeh, yeh)",
+		"Fast car, NASCAR, race on 'em",
+		"In the club, ain't got no ones, then we would beg them",
+		"Clothes from overseas, got the racks and they all C-Notes",
+		"You is not a G though",
+		"Lookin' at you stackin' all your money, it all green though",
+		"I was countin' that and these all twenties, that's a G-roll",
+		"",
+		"She say: 'You're the worst, you're the worst.'",
+		"I cannot die because this my universe",
+		"",
+		"I don't really care if you cry",
+		"On the real, you shoulda never lied",
+		"Shoulda saw the way she looked me in my eyes",
+		"She said: 'Baby, I am not afraid to die.'",
+		"Push me to the edge",
+		"All my friends are dead",
+		"Push me to the edge",
+		"All my friends are dead",
+		"Push me to the edge",
+		"All my friends are dead",
+		"Push me to the edge"
+	]
+	;
+
+
+
 	rightCol.append("p")
 		.attr("class","track-name")
 		.append("span")
 		.text("Lil Uzi Vert - XO Tour Llif3");
 
-	var wordList = ["care","cry","real","lied","looked","eyes","baby","afraid","die","Push","edge","friends","dead"];
+	var wordList = ["Baby,","care","cry","real","lied","looked","eyes","baby","afraid","die","Push","edge","friends","dead"];
 	var sadWords = ["cry","die","afraid","die","dead"];
 
 	rightCol.append("div")
@@ -130,18 +213,106 @@ function init() {
 	results.append("p")
 		.attr("class","break-down")
 		.html(function(){
-			return "<span>5 sad words</span> of <b>13</b> total words"
+			return "<span>4 sad words</span> of <b>11</b> total words"
 		})
 
+	var songHidden = true;
 
+	var seeMore = rightCol.append("div")
+		.attr("class","see-more")
+		.on("click",function(d){
+			if(songHidden){
+				songHidden = false;
+				d3.select(".full-song")
+					.style("display","block")
+
+				seeMoreText.text("Hide Song");
+			}
+			else{
+				d3.select(".full-song")
+					.style("display",null);
+				seeMoreText.text("Full Song");
+				songHidden = true;
+			}
+		})
+		;
+
+	seeMore.append("div")
+		.html('<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>')
+
+	var seeMoreText = seeMore.append("p")
+		.text('Full Song')
 
 	var controller = new ScrollMagic.Controller();
 
 	const dataUploaded = d3.csv("assets/data/df.csv",function(data){
 		const tracksUploaded = d3.csv("assets/data/tracks.csv",function(trackData){
+			const uniqueXOwords = d3.csv("assets/data/unique.csv",function(xoWords){
 
 			const toRemove = ["nothing_ruiner","deathgrips"];
 
+			const xoWordsMap = d3.map(xoWords,function(d){
+				return d.word;
+			});
+
+			var totalWords = 0;
+			var totalSadWords = 0;
+
+			var fullSongContainer = d3.select(".full-song");
+			fullSongContainer
+				.selectAll("p")
+				.data(fullSong)
+				.enter()
+				.append("p")
+				.attr("class","track-line")
+				.selectAll("span")
+				.data(function(d){
+					// console.log(d.split("[-\\s]"));
+					var arrayOfWords = d.split(/[ -]+/).map(function(d){
+
+						var wordClean = d.toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"").replace(/\s{2,}/g," ").replace(/'/g, '').replace("?", '');
+						var match = 0;
+						if(xoWordsMap.has(wordClean)){
+							match = 1;
+							totalWords = totalWords + 1;
+							if(xoWordsMap.get(wordClean).sad_fear == "TRUE"){
+								totalSadWords = totalSadWords + 1;
+								match = 2;
+							}
+						}
+						return [wordClean,d,match];
+					});
+					return arrayOfWords;
+				})
+				.enter()
+				.append("span")
+				.attr("class","track-word")
+				.classed("big-word",function(d){
+					if(d[2] > 0){
+						return true
+					}
+				})
+				.classed("sad-word",function(d){
+					if(d[2] == 2){
+						return true
+					}
+				})
+				.text(function(d){
+					return d[1];
+				})
+				;
+
+			var fullSongResults = fullSongContainer.append("div")
+				.attr("class","results")
+			fullSongResults.append("p")
+				.attr("class","percent")
+				.html("<span>"+Math.round(totalSadWords/totalWords*100)+"%</span> sad")
+				;
+
+			fullSongResults.append("p")
+				.attr("class","break-down")
+				.html("<span>"+totalSadWords+" sad words</span> of <b>"+totalWords+"</b> total words")
+				;
 
 			let topTracks = trackData.sort(function(a,b){
 				return +b.pct_sad - +a.pct_sad;
@@ -852,7 +1023,7 @@ function init() {
 
 			var scene = new ScrollMagic.Scene({
 					triggerElement: element
-					,duration: yScale(Math.round(.04815714285714286*roundAmount)/roundAmount) - yScale(Math.round(d3.max(data,function(d){return +d.percents;})*roundAmount)/roundAmount)
+					,duration: yScale(Math.round(.025*roundAmount)/roundAmount) - yScale(Math.round(d3.max(data,function(d){return +d.percents;})*roundAmount)/roundAmount)
 					,triggerHook:.5
 				})
 				.setPin(element, {pushFollowers: false})
@@ -875,6 +1046,7 @@ function init() {
 				})
 				;
 		});
+	});
 	});
 
 }

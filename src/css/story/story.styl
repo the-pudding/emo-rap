@@ -1,5 +1,48 @@
 /* CUSTOM STORY STYLE */
 
+.see-more
+  display flex
+  background-color #e8e8e9
+  border-radius 3px
+  width 120px
+  padding 0px 12px
+  padding-top 3px
+  padding-left 4px
+  justify-content center
+  margin-top 30px
+  cursor hand
+  cursor pointer
+  p
+    margin 0
+    pointer-events none
+    font-family $atlas
+    color #4a4a4a
+    font-size 13px
+    font-weight 500
+    margin-left 5px
+    line-height 24px
+    user-select none
+  div
+    width 20px
+    pointer-events none
+    svg
+      stroke #4a4a4a
+      width 100%
+
+
+.full-song
+  width 633px
+  margin 0 auto
+  margin-bottom 2rem
+  padding-left 320px
+  margin-top -60px
+  display none
+  .track-line
+    line-height 1.3
+    .track-word
+      font-size 15px
+
+
 .saddest-songs
   display flex
   flex-direction column
@@ -29,8 +72,11 @@
       color #999
       font-weight 600
       font-size 11px
-      width 30px
+      width 15px
       margin-right 4px
+      position relative
+      display inline-block
+      text-align right
     .saddest-song-track-title
       color #666
       font-size 12px
@@ -83,6 +129,49 @@ header
 .small-text
   font-size 12px
 
+.track-line
+  font-family $atlas
+  line-height 1.7
+  margin 0 auto
+  .track-word
+    margin-right 4px
+    color rgba(0,0,0,.5)
+    font-size 17px
+    &:last-of-type
+      margin 0px
+  .big-word
+    //font-size 21px
+    color black
+    font-weight 500
+  .sad-word
+    background-color $lightBlue
+    padding 0 3px
+.results
+  display flex
+  margin-top 20px
+  font-family $atlas
+  .break-down
+    margin 0
+    font-size 14px
+    span
+      //color $sadBlue
+      margin 0px
+      //background $lightBlue
+      font-weight 500
+      //padding 0 3px
+  .percent
+    //color $sadBlue
+    margin 0px
+    font-weight 600
+    font-size 14px
+    margin-right 10px
+    padding-right 10px
+    border-right 3px solid #D2D2D2
+    span
+      background $lightBlue
+      padding 2px 5px
+      margin-right 4px
+
 .explanation
   width 633px
   margin 0 auto
@@ -108,44 +197,7 @@ header
         border-bottom 2px solid #EBEBEB
         padding-bottom 5px
     .track-content
-      margin-top 30px
-      .track-line
-        line-height 5px
-        .track-word
-          margin-right 4px
-          color rgba(0,0,0,.4)
-          font-size 18px
-          &:last-of-type
-            margin 0px
-        .big-word
-          font-size 21px
-          color black
-          font-weight 600
-        .sad-word
-          color $sadBlue
-    .results
-      display flex
-      margin-top 40px
-      .break-down
-        margin 0
-        span
-          color $sadBlue
-          margin 0px
-          font-weight 600
-          font-size 16px
-
-      .percent
-        color $sadBlue
-        margin 0px
-        font-weight 600
-        font-size 16px
-        margin-right 10px
-        padding-right 10px
-        border-right 3px solid #D2D2D2
-        span
-          background $sadBlueBackground
-          padding 2px 5px
-          margin-right 4px
+      margin-top 20px
 .song-quote
   font-family $atlas
   max-width 550px
