@@ -1,5 +1,103 @@
 /* CUSTOM STORY STYLE */
 
+.title
+  width 600px
+  text-align center
+  margin 0 auto
+  margin-bottom 4rem
+  .top-line
+    font-family $futura
+    font-size 24px
+    text-transform lowercase
+    letter-spacing 1.5px
+    margin 0 auto
+    line-height 2.8
+  .vs-line
+    font-family $futura
+    margin 0 auto
+    width 415px
+    position relative
+    p
+      font-size 36px
+      text-transform lowercase
+      line-height .4
+      display inline-block
+      padding 0 1rem
+      background-color $backgroundColor
+      z-index 100
+      //margin-top -10px
+      position relative
+    &:before
+        content ''
+        width 100%
+        height 2px
+        background #BDBDBD
+        position absolute
+        left 0px
+        top 50%
+        transform translate(0,-50%)
+
+  .rap-line
+    font-family $futura
+    margin 0 auto
+    color #18604F
+    font-size 110px
+    text-transform capitalize
+    line-height .9
+  .dash-line
+    font-family $futura
+    margin 0 auto
+    color #28115A
+    font-size 85px
+    line-height 1.1
+  .confessional-line
+    font-family $futura
+    margin 0 auto
+    font-size 48px
+    color #28115A
+    letter-spacing 7px
+    text-transform uppercase
+    line-height 1
+    margin-top 0px
+    z-index 1
+    position relative
+    span
+      background-image url(assets/images/emo-face.png)
+      background-size 40px
+      background-position-y 3px
+      margin-left -2px
+      width 90px
+      height 90px
+      position relative
+      background-repeat no-repeat
+      z-index 1
+      color rgba(0,0,0,0)
+
+
+
+.first-section
+  width 633px
+  margin 0 auto
+  position relative
+  .byline
+    width 150px
+    position absolute
+    top 3px
+    left 0px
+    transform translate(calc(-100% - 37px),0px)
+    .author, .date-published
+      font-size 12px
+      text-transform uppercase
+      letter-spacing .7px
+      margin 0 auto
+      font-weight 600
+      color black
+      font-family $atlas
+      text-align right
+
+    .date-published
+      color #9E9E9E
+
 .see-more
   display flex
   background-color #e8e8e9
@@ -31,7 +129,7 @@
 
 
 .full-song
-  width 633px
+  //width 633px
   margin 0 auto
   margin-bottom 2rem
   padding-left 320px
@@ -45,56 +143,115 @@
 
 .saddest-songs
   display flex
-  flex-direction column
+  margin 0 auto
+  align-items center
+  flex-direction row
   height 530px
-  width 900px
+  width 500px
   flex-wrap wrap
-  .saddest-song-track
+  margin-top 2rem
+  .saddest-song-track-div
+    width 100%
     margin 0
-    font-family $atlas
-    width 400px
-    //background-color rgba(24,96,79,.1)
-    margin-right 0rem
-    font-weight 500
-    font-size 12px
-    color #18604F
+    cursor hand
+    cursor pointer
     position relative
-    border-bottom 1px solid #ccc
     &:first-of-type
-      .saddest-song-track-percent
-        &:after
-          content 'sad'
+      .saddest-song-track
+        &:before
+          content 'Song Rank'
           position absolute
-          margin-left 5px
           font-weight 500
-    .saddest-song-track-count
+          transform translate(25px,-100%)
+          text-align left
+          width 70px
+          font-size 12px
+          color black
+          color #666
+        .saddest-song-track-percent
+          &:after
+            content 'Emo Words'
+            position absolute
+            font-weight 500
+            transform translate(-100%,-100%)
+            text-align right
+            width 70px
+            font-size 12px
+            color #666
+    .saddest-song-track
+      margin 0
       font-family $atlas
-      color #999
-      font-weight 600
-      font-size 11px
-      width 15px
-      margin-right 4px
-      position relative
-      display inline-block
-      text-align right
-    .saddest-song-track-title
-      color #666
-      font-size 12px
-      font-family $atlas
-      text-transform capitalize
+      user-select none
+      //background-color rgba(24,96,79,.1)
+      margin-right 0rem
       font-weight 500
-    .saddest-song-track-percent
-      color #000
-      font-size 12px
-      font-family $atlas
-      text-transform capitalize
-      font-weight 400
+      font-size 15px
+      color #18604F
+      position relative
+      border-bottom 1px solid #ccc
+      .saddest-song-track-count
+        font-family $atlas
+        color #999
+        user-select none
+        font-weight 500
+        font-size 13px
+        width 20px
+        margin-right 4px
+        position relative
+        display inline-block
+        text-align right
+      .saddest-song-track-title
+        color #111
+        font-size 15px
+        user-select none
+        font-family $atlas
+        text-transform capitalize
+        font-weight 400
+      .saddest-song-track-percent
+        color #666
+        font-size 14px
+        font-family $atlas
+        text-transform capitalize
+        font-weight 500
+        user-select none
+        position absolute
+        line-height 28px
+        right 0px
+        top 0px
+    .emo-top-song
+      color #28115A
+    .saddest-song-annotation
       position absolute
+      display none
       right 0px
-      top 0px
-  .emo-top-song
-    color #28115A
-    //background-color rgba(40,17,90,.1)
+      transform translate(100%, 0px)
+      //display block
+      top 5px
+      //display flex
+      &:before
+        position absolute
+        content 'example lines'
+        top 0px
+        left 0px
+        transform translate(0px,calc(-100% - 10px))
+        font-size 11px
+        font-family $atlas
+        text-transform uppercase
+        color #000
+        width 100%
+        text-align center
+        font-weight 500
+      .saddest-song-line
+        margin 0px
+        font-size 12px
+        font-family $atlas
+      svg
+        width 20px
+        height 20px
+  .saddest-song-annotation-highlighted
+    .saddest-song-annotation
+      display flex
+
 
 
 .chart-title
@@ -103,13 +260,21 @@
   text-align center
   margin-bottom 0px
   text-transform lowercase
+.chart-title-sub
+  margin 0 auto
+  font-size 16px
+  font-family $atlas
+  text-align center
+  font-weight 400
+  margin-top -5px
 .prose
   font-family $atlas
   font-size 16px
   font-weight 400
   color #111
-  width 633px
+  //width 633px
   padding 0px
+  width 100%
   margin 0 auto
   margin-bottom 1.5rem
 
@@ -173,7 +338,7 @@ header
       margin-right 4px
 
 .explanation
-  width 633px
+  //width 633px
   margin 0 auto
   margin-top 4rem
   position relative
@@ -214,7 +379,7 @@ header
     padding 10px 0px
     height 60px
     margin-top 5px
-    margin-right 15px
+    margin-right 20px
     .volume-on
       display block
     .volume-off
@@ -266,7 +431,7 @@ header
   .emo-index
     font-family 'Atlas Grotesk Web'
     position relative
-    padding-bottom 1000px
+    padding-bottom 100px
     .tool-tip
       background white
       box-shadow 2px 2px 10px rgba(0, 0, 0, 0.10)
@@ -334,9 +499,15 @@ header
       stroke #D7D7D7
       shape-rendering crispEdges
     .axis-head
-      font-size 18px
+      font-size 21px
       font-family $futura
       text-transform uppercase
+      .plus-sign
+        fill #929292
+        font-size 12px
+        font-weight 600
+      .other-genre
+        font-size 14px
     .emo-head
       fill #28115A
     .hip-hop-head

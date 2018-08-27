@@ -4,6 +4,9 @@ function resize() {}
 
 function init() {
 
+	var otherHipHopColor = "#2EB494"
+	var otherRockColor = "#5935A7"
+
 	var lucidDreamsAudio = document.getElementById("lucid-dreams");
 
 	var audioControls = d3.select(".audio-controls")
@@ -248,6 +251,8 @@ function init() {
 	const dataUploaded = d3.csv("assets/data/df.csv",function(data){
 		const tracksUploaded = d3.csv("assets/data/tracks.csv",function(trackData){
 			const uniqueXOwords = d3.csv("assets/data/unique.csv",function(xoWords){
+				const trackWords = d3.csv("assets/data/track_words.csv",function(trackWords){
+					const linesData = d3.csv("assets/data/lines.csv",function(linesArray){
 
 			const toRemove = ["nothing_ruiner","deathgrips"];
 
@@ -255,10 +260,16 @@ function init() {
 				return d.word;
 			});
 
+
+			var trackWordsMap = d3.map(d3.nest().key(function(d){return d.track_title+"$"+d.artist;}).entries(trackWords),function(d){
+				return d.key;
+			});
+
 			var totalWords = 0;
 			var totalSadWords = 0;
 
 			var fullSongContainer = d3.select(".full-song");
+
 			fullSongContainer
 				.selectAll("p")
 				.data(fullSong)
@@ -322,15 +333,12 @@ function init() {
 			})
 			;
 
+
+
 			let tracksByArtist = d3.map(d3.nest().key(function(d){ return d.artist; })
 				.entries(topTracks),function(d){return d.key});
 
-			console.log(topTracks);
-
-
-
-
-			const emoBands = ["black_parade","dashboard","radiohead","takingback","chemicalromance","fall out boy","jimmyeatworld","paramore","brandnew"];
+			const emoBands = ["where_you","black_parade","dashboard","radiohead","takingback","chemicalromance","fall out boy","jimmyeatworld","paramore","brandnew"];
 
 		  const crossWalk = {
 			  "dashboard": {
@@ -460,7 +468,23 @@ function init() {
 		    "young thug": {
 				  "artist": "Young Thug",
 		  		"album": "Beautiful Thugger Girls"
-			  }
+			  },
+				"earl_sweatshirt": {
+				  "artist": "Earl Sweatshirt",
+		  		"album": "I Don't Like..."
+			  },
+				"weeknd": {
+				  "artist": "The Weeknd",
+		  		"album": "Trilogy"
+			  },
+				"future": {
+					"artist": "Future",
+					"album": "DS2"
+				},
+				"where_you": {
+					"artist": "Taking Back Sunday",
+					"album": "Where You Want To Be"
+				}
 			}
 
 			const margin = {"top":50,"bottom":0,"left":0,"right":0};
@@ -862,7 +886,7 @@ function init() {
 				.attr("y",-20)
 				.attr("class","axis-text")
 				.selectAll("tspan")
-				.data(["Most Sad","Lyrics"])
+				.data(["Most Emo","Lyrics"])
 				.enter()
 				.append("tspan")
 				.attr("dy",function(d,i){
@@ -908,7 +932,7 @@ function init() {
 
 			maxSad
 				.selectAll("tspan")
-				.data([Math.round(maxAmount*100)+"%","Sad"])
+				.data([Math.round(maxAmount*100)+"%","Emo"])
 				.enter()
 				.append("tspan")
 				.attr("dy",function(d,i){
@@ -953,7 +977,25 @@ function init() {
 				.attr("x",rectWidth+rectWidthGap)
 				.attr("y",0)
 				.attr("class","axis-head emo-head")
-				.text("Emo Bands (third wave, ‘00s - ‘10s)")
+				;
+			emoHeadText.append("tspan")
+				.text("Emo Bands")
+				.attr("dx",8)
+				;
+
+			emoHeadText.append("tspan")
+				.text("+")
+				.attr("class","plus-sign")
+				.attr("dx",5)
+				.attr("dy",-3)
+				;
+
+			emoHeadText.append("tspan")
+				.attr("dx",5)
+				.attr("dy",3)
+				.attr("class","other-genre")
+				.style("fill",otherRockColor)
+				.text("Other rock")
 				;
 
 			var hipHopText = axisText
@@ -961,8 +1003,28 @@ function init() {
 				.attr("x",-rectWidthGap)
 				.attr("y",0)
 				.attr("class","axis-head hip-hop-head")
-				.text("Emo-rap / Hip Hop")
 				.attr("text-anchor","end")
+				;
+
+			hipHopText.append("tspan")
+				.text("other hip hop")
+				.style("fill",otherHipHopColor)
+				.attr("class","other-genre")
+				.attr("dx",-8)
+				//.attr("dy",-3)
+				;
+
+			hipHopText.append("tspan")
+				.text("+")
+				.attr("class","plus-sign")
+				.attr("dx",5)
+				.attr("dy",-3)
+				;
+
+			hipHopText.append("tspan")
+				.text("Emo-rap")
+				.attr("dx",5)
+				.attr("dy",3)
 				;
 
 			axisText
@@ -1000,9 +1062,25 @@ function init() {
 				;
 
 			var saddestSongsContainer = d3.select(".saddest-songs");
-			saddestSongsContainer.selectAll("p")
-				.data(topTracks.slice(0,50))
+
+			var saddestSongsDivs = saddestSongsContainer.selectAll("div")
+				.data(topTracks.slice(0,25))
 				.enter()
+				.append("div")
+				.attr("class","saddest-song-track-div")
+				.on("mouseover",function(d){
+					saddestSongsDivs.classed("saddest-song-annotation-highlighted",false)
+					d3.select(this).classed("saddest-song-annotation-highlighted",true)
+				})
+				;
+
+			saddestSongsDivs.filter(function(d,i){
+					return i==0;
+				})
+				.classed("saddest-song-annotation-highlighted",true)
+				;
+
+			saddestSongsDivs
 				.append("p")
 				.attr("class",function(d){
 					if(emoBands.indexOf(d.artist) == -1){
@@ -1010,7 +1088,6 @@ function init() {
 					}
 					return "saddest-song-track emo-top-song"
 				})
-
 				.html(function(d,i){
 					var artistInfo = crossWalk[d.artist]
 					var suffix = "%"
@@ -1019,7 +1096,38 @@ function init() {
 						trackTitle = trackTitle.slice(0,22)+"..."
 					}
 					return "<span class='saddest-song-track-count'>"+(i+1)+".</span>"+artistInfo["artist"] +" - <span class='saddest-song-track-title'>"+trackTitle+"</span><span class='saddest-song-track-percent'>"+Math.round(d.pct_sad*100)+suffix+"</span>"
-				});
+				})
+				.on("click",function(d){
+					var trackWordData = trackWordsMap.get(d.track_title+"$"+d.artist);
+					console.log(trackWordData);
+				})
+				;
+
+			var saddestAnnotation = saddestSongsDivs
+				.append("div")
+				.attr("class","saddest-song-annotation")
+				;
+
+
+
+			saddestAnnotation
+				.append("svg")
+				.attr("xmlns","http://www.w3.org/2000/svg")
+				.attr("width",24)
+				.attr("height",24)
+				.attr("viewBox","0 0 24 24")
+				.attr("fill","none")
+				.attr("stroke","#29A9D1")
+				.attr("stroke-width","2")
+				.attr("stroke-linecap","round")
+				.attr("stroke-linejoin","round")
+				.append('polyline')
+				.attr("points","15 18 9 12 15 6")
+				;
+
+			saddestAnnotation.append("p")
+				.attr("class","saddest-song-line")
+				.text(linesArray[0].lyric)
 
 			var scene = new ScrollMagic.Scene({
 					triggerElement: element
@@ -1046,6 +1154,8 @@ function init() {
 				})
 				;
 		});
+	});
+	});
 	});
 	});
 
