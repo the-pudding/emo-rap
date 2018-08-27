@@ -254,6 +254,13 @@ function init() {
 				const trackWords = d3.csv("assets/data/track_words.csv",function(trackWords){
 					const linesData = d3.csv("assets/data/lines.csv",function(linesArray){
 
+			var linesArrayMap = d3.map(d3.nest().key(function(d){
+				return d.track_title+"$"+d.artist;
+			})
+			.entries(linesArray),function(d){
+				return d.key;
+			});
+
 			const toRemove = ["nothing_ruiner","deathgrips"];
 
 			const xoWordsMap = d3.map(xoWords,function(d){
@@ -280,7 +287,6 @@ function init() {
 				.data(function(d){
 					// console.log(d.split("[-\\s]"));
 					var arrayOfWords = d.split(/[ -]+/).map(function(d){
-
 						var wordClean = d.toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"").replace(/\s{2,}/g," ").replace(/'/g, '').replace("?", '');
 						var match = 0;
 						if(xoWordsMap.has(wordClean)){
@@ -1098,7 +1104,7 @@ function init() {
 					return "<span class='saddest-song-track-count'>"+(i+1)+".</span>"+artistInfo["artist"] +" - <span class='saddest-song-track-title'>"+trackTitle+"</span><span class='saddest-song-track-percent'>"+Math.round(d.pct_sad*100)+suffix+"</span>"
 				})
 				.on("click",function(d){
-					var trackWordData = trackWordsMap.get(d.track_title+"$"+d.artist);
+					var trackWordData = trackLines.get(d.track_title+"$"+d.artist);
 					console.log(trackWordData);
 				})
 				;
@@ -1107,8 +1113,6 @@ function init() {
 				.append("div")
 				.attr("class","saddest-song-annotation")
 				;
-
-
 
 			saddestAnnotation
 				.append("svg")
@@ -1125,9 +1129,51 @@ function init() {
 				.attr("points","15 18 9 12 15 6")
 				;
 
-			saddestAnnotation.append("p")
+			saddestAnnotation.append("div")
+				.attr("class","saddest-song-lines")
+				.selectAll("p")
+				.data(function(d){
+					var trackWordData = linesArrayMap.get(d.track_title+"$"+d.artist).values;
+
+					var lines = d3.nest().key(function(d){
+						return d.lyric;
+					}).entries(trackWordData);
+
+					return lines.slice(0,5);
+				})
+				.enter()
+				.append("p")
 				.attr("class","saddest-song-line")
-				.text(linesArray[0].lyric)
+				.selectAll("span")
+				.data(function(d){
+					// return d.key
+					// console.log(d);
+					// return "hi"
+					var sadWords = d.values.map(function(d){
+						return d.word.toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"").replace(/\s{2,}/g," ").replace(/'/g, '').replace("?", '');
+					})
+					sadWords.push("feel");
+					var arrayOfWords = d.key.split(/[ -]+/)//.map(function(d){
+					// // 	var wordClean = d.toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"").replace(/\s{2,}/g," ").replace(/'/g, '').replace("?", '');
+					// 	return [wordClean,d,match];
+					// });
+					return arrayOfWords.map(function(d){
+						var wordClean = d.toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"").replace(/\s{2,}/g," ").replace(/'/g, '').replace("?", '');
+						return [d,wordClean,sadWords]
+					});
+				})
+				.enter()
+				.append("span")
+				.attr("class","saddest-song-word")
+				.classed("sad-word",function(d){
+					if(d[2].indexOf(d[1]) > -1){
+						return true
+					}
+					return false;
+				})
+				.text(function(d){
+					return d[0];
+				})
 
 			var scene = new ScrollMagic.Scene({
 					triggerElement: element
