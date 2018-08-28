@@ -6,7 +6,8 @@ function init() {
 
 	var otherHipHopColor = "#2EB494"
 	var otherRockColor = "#5935A7"
-
+	var otherHipHopBackgruondColor = "#FCFCFC" //"rgba(99, 195, 172, 0.16)"
+	var otherEmoBackgroundColor = "#FCFCFC" //"rgba(161, 66, 173, 0.1)"
 	var lucidDreamsAudio = document.getElementById("lucid-dreams");
 
 	var audioControls = d3.select(".audio-controls")
@@ -344,8 +345,9 @@ function init() {
 			let tracksByArtist = d3.map(d3.nest().key(function(d){ return d.artist; })
 				.entries(topTracks),function(d){return d.key});
 
+			const otherRock = ["pilots","radiohead"];
 			const emoBands = ["pilots","where_you","black_parade","dashboard","radiohead","takingback","chemicalromance","fall out boy","jimmyeatworld","paramore","brandnew"];
-
+			const otherHipHop = ["kanye college_dropout","tyler","lilpump","migos","earl_sweatshirt","postmalone","weeknd","kidcudi","kanye heartbreak","drake","future","kanye ye","young thug"];
 		  const crossWalk = {
 			  "dashboard": {
 				  "artist": "Dashboard Confessional",
@@ -612,6 +614,18 @@ function init() {
 					}
 					return "emo-artist emo-index-band";
 				})
+				.classed("other-rock",function(d){
+					if(otherRock.indexOf(d.artist) > -1){
+						return true
+					}
+					return false
+				})
+				.classed("other-hip-hop",function(d){
+					if(otherHipHop.indexOf(d.artist) > -1){
+						return true
+					}
+					return false
+				})
 		    .attr("y",function(d,i){
 		      return yScale(Math.round(+d.percents*roundAmount)/roundAmount);
 		    })
@@ -710,6 +724,16 @@ function init() {
 									}
 									return "emo-rect"
 								})
+								.style("fill",function(d){
+									if(otherHipHop.indexOf(artist) > -1){
+										console.log(artist,otherHipHopBackgruondColor);
+										return otherHipHopBackgruondColor
+									}
+									if(otherRock.indexOf(artist) > -1){
+										return otherEmoBackgroundColor;
+									}
+									return null;
+								})
 								.attr("x",function(d){
 									if(emoBands.indexOf(artist) == -1){
 										return (offsetRect+direction*arrayOffset[count-1]+additionalSpacing*direction)-(arrayOffset[count]+4)
@@ -730,6 +754,15 @@ function init() {
 								.append("rect")
 								.attr("width",arrayOffset[count]+8)
 								.attr("height",arrayHeight[0]+4)
+								.style("fill",function(d){
+									if(otherHipHop.indexOf(artist) > -1){
+										return otherHipHopBackgruondColor
+									}
+									if(otherRock.indexOf(artist) > -1){
+										return otherEmoBackgroundColor;
+									}
+									return null;
+								})
 								.attr("class",function(d){
 									if(emoBands.indexOf(artist) == -1){
 										return "rap-rect"
@@ -767,6 +800,15 @@ function init() {
 										return "rap-rect"
 									}
 									return "emo-rect"
+								})
+								.style("fill",function(d){
+									if(otherHipHop.indexOf(artist) > -1){
+										return otherHipHopBackgruondColor;
+									}
+									if(otherRock.indexOf(artist) > -1){
+										return otherEmoBackgroundColor;
+									}
+									return null;
 								})
 								.attr("x",function(d){
 									if(emoBands.indexOf(artist) == -1){

@@ -79,6 +79,15 @@
   width 633px
   margin 0 auto
   position relative
+  .spark-wrapper
+    width 300px
+    height 200px
+    position absolute
+    transform translate(calc(-100% - 20px), 0px)
+    .spark-svg-wrapper
+      svg
+        width 100%
+        height auto
   .song-preview-wrapper
     margin-bottom 2rem
     iframe
@@ -102,6 +111,9 @@
 
     .date-published
       color #9E9E9E
+.post-emo-index
+  padding-left 150px
+  margin-bottom 4rem
 
 .see-more
   display flex
@@ -608,3 +620,7 @@ header
         text-transform uppercase
         font-weight 500
         letter-spacing 0px
+    .other-hip-hop
+      fill $otherHipHopColor
+    .other-rock
+      fill $otherRockColor
