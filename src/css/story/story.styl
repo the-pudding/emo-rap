@@ -79,6 +79,10 @@
   width 633px
   margin 0 auto
   position relative
+  .song-preview-wrapper
+    iframe
+      margin 0 auto
+      display block
   .byline
     width 150px
     position absolute
@@ -148,16 +152,19 @@
   margin 0 auto
   align-items center
   flex-direction row
-  height 530px
+  //height 530px
   width 500px
   flex-wrap wrap
   margin-top 2rem
+  margin-bottom 3rem
   .saddest-song-track-div
     width 100%
     margin 0
     cursor hand
     cursor pointer
     position relative
+    &:hover
+      background #efefef
     &:first-of-type
       .saddest-song-track
         &:before

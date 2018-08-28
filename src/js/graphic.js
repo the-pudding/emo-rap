@@ -344,13 +344,17 @@ function init() {
 			let tracksByArtist = d3.map(d3.nest().key(function(d){ return d.artist; })
 				.entries(topTracks),function(d){return d.key});
 
-			const emoBands = ["where_you","black_parade","dashboard","radiohead","takingback","chemicalromance","fall out boy","jimmyeatworld","paramore","brandnew"];
+			const emoBands = ["pilots","where_you","black_parade","dashboard","radiohead","takingback","chemicalromance","fall out boy","jimmyeatworld","paramore","brandnew"];
 
 		  const crossWalk = {
 			  "dashboard": {
 				  "artist": "Dashboard Confessional",
 		  		"album": "TPYHCtFtM"
 			  },
+				"pilots": {
+					"artist": "twenty one pilots",
+					"album": "vessel"
+				},
 		    "radiohead": {
 				  "artist": "Radiohead",
 		  		"album": "High and Dry"
