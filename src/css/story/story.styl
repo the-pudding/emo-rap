@@ -5,6 +5,10 @@
   text-align center
   margin 0 auto
   margin-bottom 4rem
+  @media (max-width 1000px)
+    margin-bottom 5rem
+  @media (max-width 600px)
+    width 100%
   .top-line
     font-family $futura
     font-size 24px
@@ -12,11 +16,15 @@
     letter-spacing 1.5px
     margin 0 auto
     line-height 2.8
+    @media (max-width 450px)
+      font-size 24px
   .vs-line
     font-family $futura
     margin 0 auto
     width 415px
     position relative
+    @media (max-width 450px)
+      width 95%
     p
       font-size 36px
       text-transform lowercase
@@ -44,12 +52,18 @@
     font-size 110px
     text-transform capitalize
     line-height .9
+    @media (max-width 450px)
+      font-size 85px
   .dash-line
     font-family $futura
     margin 0 auto
     color #28115A
     font-size 85px
     line-height 1.1
+    @media (max-width 450px)
+      font-size 62px
+
+
   .confessional-line
     font-family $futura
     margin 0 auto
@@ -61,6 +75,12 @@
     margin-top 0px
     z-index 1
     position relative
+    @media (max-width 450px)
+      font-size 32px
+      span
+        background-size 29px
+        background-position-y 0px
+
     span
       background-image url(assets/images/emo-face.png)
       background-size 40px
@@ -75,19 +95,31 @@
 
 
 
-.first-section
+.first-section,.notes
   width 633px
   margin 0 auto
   position relative
+  @media (max-width 800px)
+    width calc(100% - 4rem)
+  @media (max-width 550px)
+    width calc(100% - 2rem)
   .spark-wrapper
     width 300px
     height 200px
     position absolute
     transform translate(calc(-100% - 20px), 0px)
+    @media (max-width 800px)
+      position relative
+      transform translate(0px,0px)
+      margin 0 auto
+      height 250px
     .spark-svg-wrapper
+      font-family $atlas
       svg
         width 100%
         height auto
+        text
+          font-family $atlas
   .song-preview-wrapper
     margin-bottom 2rem
     iframe
@@ -99,6 +131,17 @@
     top 3px
     left 0px
     transform translate(calc(-100% - 37px),0px)
+    @media (max-width 920px)
+      transform translate(0px,calc(-100% - 10px))
+      display flex
+      flex-wrap wrap
+      width 100%
+      justify-content center
+      .author, .date-published
+        text-align left
+        margin 0
+      .author
+        margin-right 10px
     .author, .date-published
       font-size 12px
       text-transform uppercase
@@ -114,6 +157,10 @@
 .post-emo-index
   padding-left 150px
   margin-bottom 4rem
+  @media (max-width 1000px)
+    padding-left 250px
+  @media (max-width 800px)
+    padding-left 0px
 
 .see-more
   display flex
@@ -150,8 +197,10 @@
   margin 0 auto
   margin-bottom 2rem
   padding-left 320px
-  margin-top 0px
+  margin-top -50px
   display none
+  @media (max-width 1000px)
+    padding-left 0px
   .track-line
     line-height 1.7
     .track-word
@@ -174,6 +223,13 @@
   flex-wrap wrap
   margin-top 3rem
   margin-bottom 3rem
+  @media (max-width 900px)
+    margin-left 1rem
+    margin-right 0px
+    width calc(100% - 200px)
+  @media (max-width 500px)
+    width calc(100% - 150px)
+    margin-left 10px
   .saddest-song-track-div
     width 100%
     margin 0
@@ -194,6 +250,9 @@
           font-size 12px
           color black
           color #666
+          @media (max-width 330px)
+            transform translate(0px,-100%)
+            
         .saddest-song-track-percent
           &:after
             content 'Emo Words'
@@ -215,6 +274,12 @@
       color #18604F
       position relative
       border-bottom 1px solid #ccc
+      @media (max-width 600px)
+        font-size 15px
+      @media (max-width 400px)
+        font-size 12px
+      @media (max-width 330px)
+        font-size 11px
       .saddest-song-track-count
         font-family $atlas
         color #999
@@ -226,6 +291,11 @@
         position relative
         display inline-block
         text-align right
+        @media (max-width 400px)
+          font-size 12px
+        @media (max-width 330px)
+          font-size 11px
+          display none
       .saddest-song-track-title
         color #111
         font-size 15px
@@ -233,6 +303,17 @@
         font-family $atlas
         text-transform capitalize
         font-weight 400
+        @media (max-width 600px)
+          font-size 15px
+          display block
+          padding-left 25px
+          line-height 1
+          margin-bottom 5px
+        @media (max-width 400px)
+          font-size 12px
+        @media (max-width 330px)
+          font-size 11px
+          padding-left 0px
       .saddest-song-track-percent
         color #666
         font-size 14px
@@ -244,6 +325,12 @@
         line-height 28px
         right 0px
         top 0px
+        @media (max-width 400px)
+          font-size 12px
+          line-height 24px
+        @media (max-width 330px)
+          font-size 11px
+          line-height 20px
     .emo-top-song
       color #28115A
     .saddest-song-annotation
@@ -255,10 +342,19 @@
       top 5px
       //display flex
       .saddest-song-line
-        line-height 2
+        line-height 1.5
+        max-width 250px
+        display flex
+        flex-wrap wrap
+        @media (max-width 1100px)
+          max-width 150px
+        @media (max-width 500px)
+          width 100px
       .saddest-song-word
         font-size 12px
         margin-right 4px
+        @media (max-width 500px)
+          font-size 11px
       .sad-word
         background-color rgba(153,226,242,.41)
         color black
@@ -281,6 +377,7 @@
         margin 0px
         font-size 12px
         font-family $atlas
+        margin-bottom 5px
       svg
         width 20px
         height 20px
@@ -296,6 +393,8 @@
   text-align center
   margin-bottom 0px
   text-transform lowercase
+  @media (max-width 650px)
+    font-size 24px
 .chart-title-sub
   margin 0 auto
   font-size 14px
@@ -303,6 +402,8 @@
   text-align center
   font-weight 400
   margin-top -5px
+  @media (max-width 600px)
+    max-width 90%
 .prose, blockquote
   font-family $atlas
   font-size 16px
@@ -354,9 +455,13 @@ header
     margin-right 4px
     color rgba(0,0,0,.5)
     font-size 16px
+    @media (max-width 750px)
+      font-size 12px
   .big-word
     color black
     font-size 20px
+    @media (max-width 750px)
+      font-size 14px
     &:last-of-type
       margin 0px
 .results
@@ -367,6 +472,8 @@ header
     margin 0
     font-size 14px
     color black
+    @media (max-width 750px)
+      font-size 12px
     .sad-breakdown
       //color $sadBlue
       margin 0px
@@ -389,10 +496,8 @@ header
     margin-right 5px
     padding-right 5px
     border-right 3px solid #D2D2D2
-    span
-      //background $lightBlue
-      //padding 2px 5px
-      //margin-right 2px
+    @media (max-width 750px)
+      font-size 12px
 
 .explanation
   //width 633px
@@ -402,6 +507,10 @@ header
   margin-bottom 5rem
   .left-col
     width 300px
+    @media (max-width 750px)
+      width calc(100% - 320px)
+    @media (max-width 550px)
+      width 100%
     .prose
       width 100%
   .right-col
@@ -409,6 +518,11 @@ header
     left 320px
     font-family $atlas
     top 0px
+    @media (max-width 750px)
+      left calc(100% - 300px)
+    @media (max-width 550px)
+      position relative
+      left auto
     .track-name
       margin 0px
       font-size 14px
@@ -423,6 +537,7 @@ header
 .song-quote
   font-family $atlas
   max-width 550px
+  width 100%
   margin 0 auto
   margin-top 2rem
   display flex
@@ -464,11 +579,12 @@ header
   audio
     width 250px
     margin-top 20px
-
   p
     margin 0
     font-size 18px
     transition color 1s
+    @media (max-width 550px)
+      font-size 16px
     .verse-face
       background-image url("assets/images/faces.png")
       margin 0 auto
@@ -614,13 +730,38 @@ header
         fill #6b6b6b
         text-transform lowercase
         padding-left 10px
+        @media (max-width 1050px)
+          font-size 12px
+        @media (max-width 1000px)
+          font-size 13px
+        @media (max-width 750px)
+          font-size 12px
       .artist-index
         font-size 15px
         font-family $futura
         text-transform uppercase
         font-weight 500
         letter-spacing 0px
+        @media (max-width 1050px)
+          font-size 14px
+        @media (max-width 1000px)
+          font-size 15px
+        @media (max-width 750px)
+          font-size 14px
+        @media (max-width 600px)
+          font-size 14px
     .other-hip-hop
       fill $otherHipHopColor
     .other-rock
       fill $otherRockColor
+
+.notes
+  background #fff
+  margin-top 4rem
+  border-top 2px solid black
+  padding 1rem 2rem
+  .prose
+    font-size 12px
+    font-weight 400
+    &:last-of-type
+      margin 0px

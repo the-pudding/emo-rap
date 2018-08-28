@@ -4,6 +4,10 @@ function resize() {}
 
 function init() {
 
+
+	var viewportWidth = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+	var viewportHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+
 	var otherHipHopColor = "#2EB494"
 	var otherRockColor = "#5935A7"
 	var otherHipHopBackgruondColor = "#FCFCFC" //"rgba(99, 195, 172, 0.16)"
@@ -348,7 +352,7 @@ function init() {
 			const otherRock = ["pilots","radiohead"];
 			const emoBands = ["pilots","where_you","black_parade","dashboard","radiohead","takingback","chemicalromance","fall out boy","jimmyeatworld","paramore","brandnew"];
 			const otherHipHop = ["kanye college_dropout","tyler","lilpump","migos","earl_sweatshirt","postmalone","weeknd","kidcudi","kanye heartbreak","drake","future","kanye ye","young thug"];
-		  const crossWalk = {
+		  let crossWalk = {
 			  "dashboard": {
 				  "artist": "Dashboard Confessional",
 		  		"album": "TPYHCtFtM"
@@ -407,11 +411,11 @@ function init() {
 			  },
 		    "lilpeep": {
 				  "artist": "Lil Peep",
-		  		"album": "Come Over When You're Sober"
+		  		"album": "Come Over When..."
 			  },
 		    "postmalone": {
 				  "artist": "Post Malone",
-		  		"album": "Beerbongs & Bentleys"
+		  		"album": "Beerbongs"
 			  },
 		    "drake": {
 				  "artist": "Drake",
@@ -479,7 +483,7 @@ function init() {
 			  },
 		    "young thug": {
 				  "artist": "Young Thug",
-		  		"album": "Beautiful Thugger Girls"
+		  		"album": "Beautiful Thugger..."
 			  },
 				"earl_sweatshirt": {
 				  "artist": "Earl Sweatshirt",
@@ -498,10 +502,22 @@ function init() {
 					"album": "Where You Want To Be"
 				}
 			}
-
+			if(viewportWidth < 750){
+				crossWalk.dashboard.artist = "Dashboard"
+			}
+			if(viewportWidth < 600){
+				crossWalk["where_you"].album = "where you..."
+				crossWalk["takingback"].album = "tell all..."
+			}
 			const margin = {"top":50,"bottom":0,"left":0,"right":0};
-			const width = 960-margin.left-margin.top;
-			const height = 700-margin.top-margin.bottom;
+			let width = 960-margin.left-margin.top;
+			if(viewportWidth < 960){
+				width = viewportWidth-margin.left-margin.top;
+			}
+			let height = 700-margin.top-margin.bottom;
+			if(viewportWidth < 1000){
+				height = 1800-margin.top-margin.bottom;
+			}
 			const container = d3.select(".emo-index");
 
 			const svg = container.append("svg")
@@ -514,8 +530,20 @@ function init() {
 			let rectWidth = 25
 			let rectWidthGap = 14;
 			let maxAmount = .22
+			if(viewportWidth < 1000){
+				maxAmount = .20
+			}
 			let minAmount = .01
+			if(viewportWidth < 1000){
+				minAmount = .02
+			}
 			var roundAmount = 150
+			if(viewportWidth < 1000){
+				roundAmount = 500
+			}
+			if(viewportWidth < 550){
+				roundAmount = 500
+			}
 
 		  const yScale = d3.scaleLinear().domain([minAmount,maxAmount]).range([height,0]);
 
@@ -1192,7 +1220,9 @@ function init() {
 					var lines = d3.nest().key(function(d){
 						return d.lyric;
 					}).entries(trackWordData);
-
+					if(viewportWidth < 500){
+						return lines.slice(0,3)
+					}
 					return lines.slice(0,5);
 				})
 				.enter()
