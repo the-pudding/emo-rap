@@ -221,7 +221,7 @@ function init() {
 
 	var songHidden = true;
 
-	var seeMore = rightCol.append("div")
+	var seeMore = rightCol.append("button")
 		.attr("class","see-more")
 		.on("click",function(d){
 			if(songHidden){
@@ -261,7 +261,7 @@ function init() {
 				return d.key;
 			});
 
-			const toRemove = ["nothing_ruiner","deathgrips"];
+			const toRemove = ["nothing_ruiner","deathgrips","drake","chemicalromance"];
 
 			const xoWordsMap = d3.map(xoWords,function(d){
 				return d.word;
@@ -788,7 +788,7 @@ function init() {
 							toolTipEmoIndex.append("div")
 								.attr("class","tool-tip-head")
 								.html(function(d){
-									return "<span>Track Sadness of</span> "+crossWalk[artist].album
+									return "<span>Emo Data for</span> "+crossWalk[artist].album
 								});
 
 							var toolTipTracks = toolTipEmoIndex.selectAll(".tool-tip-track")
@@ -1071,13 +1071,21 @@ function init() {
 				})
 				;
 
+			var revealed = 24;
+
 			var saddestSongsContainer = d3.select(".saddest-songs");
 
 			var saddestSongsDivs = saddestSongsContainer.selectAll("div")
-				.data(topTracks.slice(0,25))
+				.data(topTracks.slice(0,100))
 				.enter()
 				.append("div")
 				.attr("class","saddest-song-track-div")
+				.style("display",function(d,i){
+					if(i < 25){
+						return null
+					}
+					return "none"
+				})
 				.on("mouseover",function(d){
 					saddestSongsDivs.classed("saddest-song-annotation-highlighted",false)
 					d3.select(this).classed("saddest-song-annotation-highlighted",true)
@@ -1178,6 +1186,29 @@ function init() {
 				.text(function(d){
 					return d[0];
 				})
+
+			var seeMoreSadSongs = saddestSongsContainer.append("button")
+				.attr("class","see-more")
+				.on("click",function(d){
+					revealed = revealed + 25;
+					if(revealed > 75){
+						seeMoreSadSongs.style("display","none");
+					}
+					saddestSongsDivs
+						.style("display",function(d,i){
+							if(i < revealed){
+								return null
+							}
+							return "none"
+						})
+				})
+				;
+
+			seeMoreSadSongs.append("div")
+				.html('<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>')
+
+			seeMoreSadSongs.append("p")
+				.text('Next 25 Songs')
 
 			var scene = new ScrollMagic.Scene({
 					triggerElement: element
