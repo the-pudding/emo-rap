@@ -1,0 +1,122 @@
+footer
+	margin-bottom 3rem
+	.patreon
+		display flex
+		align-items center
+		justify-content center
+		flex-wrap wrap
+		p
+			max-width 30rem
+			color #18604F
+		a
+			background #18604F
+			border-radius 3px
+			padding 1rem
+			color white
+			font-weight 600
+			max-width 20rem
+			text-align center
+
+	.recirc
+		max-width 70rem
+		margin 0 auto
+
+	.recirc__hed
+		text-align center
+		text-transform uppercase
+		border 1px solid $white
+		border-bottom none
+		color $gray-dark
+		width 20rem
+		margin 0 auto
+		margin-top 3rem
+		set-type-size(small)
+		font-weight 400
+		padding 0.5em
+		&:first-of-type
+			background-color lighten(#18604F, 65)
+			color darken(#18604F, 10)
+		&:last-of-type
+			background-color lighten(#28115a, 70)
+			color darken(#28115a, 10)
+
+	.recirc__articles
+		display flex
+		flex-wrap wrap
+		border 1px solid $white
+		&:first-of-type
+			background-color lighten(#18604F, 65)
+			a
+				color darken(#18604F, 10)
+				&:hover
+					color #18604F
+		&:last-of-type
+			background-color lighten(#28115a, 70)
+			a
+				color darken(#28115a, 10)
+				&:hover
+					color #28115a
+		// align-items center
+
+		li
+			margin 0.5rem
+			width 100%
+			padding 2rem 1rem
+			
+			+mq('bp-5')
+				margin 1rem
+				margin-right 0
+				width calc(33.33% - 1rem)
+				border-right 1px solid $white
+
+			&:last-of-type
+				border-right none
+
+			
+			
+			
+
+		a
+			set-type-size(large)
+			border-bottom none
+			font-weight 600
+
+
+	.company__wrapper
+		display flex
+		flex-wrap nowrap
+		justify-content center
+		max-width 60rem
+		margin 3rem auto
+		.company__left, .company__right
+			max-width 25em
+			padding 0 1em
+			p
+				margin 0
+				font-size 0.8em
+		.company__right
+			text-align center
+
+			ul
+				font-weight 400
+				font-size .8em
+				line-height 1.6
+				list-style-type none
+
+			li
+				margin-right 1.5em
+				float left
+				font-size 12px
+			a
+				text-transform uppercase
+				text-decoration none
+				border-bottom none
+				font-weight 400
+			
+			svg
+				fill #000
+				height 16px
+				width 16px
+		
+	.company__trademark
+		text-align center
