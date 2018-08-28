@@ -133,14 +133,16 @@
   margin 0 auto
   margin-bottom 2rem
   padding-left 320px
-  margin-top -60px
+  margin-top 0px
   display none
   .track-line
-    line-height 1.3
+    line-height 1.7
     .track-word
       font-size 15px
 
-
+.saddest-songs-wrapper
+  width 100%
+  overflow hidden
 .saddest-songs
   display flex
   margin 0 auto
@@ -236,11 +238,11 @@
       .sad-word
         background-color rgba(153,226,242,.41)
         color black
-        font-weight 400
+        font-weight 500
         padding 0 3px
       &:before
         position absolute
-        content 'example lines'
+        content 'example lyrics'
         top 0px
         left 0px
         transform translate(20px,calc(-100% - 12px))
@@ -272,7 +274,7 @@
   text-transform lowercase
 .chart-title-sub
   margin 0 auto
-  font-size 16px
+  font-size 14px
   font-family $atlas
   text-align center
   font-weight 400
@@ -291,9 +293,20 @@
 .prose-big
   font-size 18px
 
+.big-word
+  font-size 24px
+  color black
+  //font-weight 500
+  background-color rgba(220, 220, 220, 0.31)
+  padding 0 4px
+  border-bottom 3px solid rgb(197, 197, 197)
 .sad-word
-  color $sadBlue
-  font-weight 600
+  //background-color $lightBlue
+  font-weight 400
+  background-color rgba(81, 215, 255, 0.31)
+  padding 0 4px
+  border-bottom 3px solid rgba(69, 176, 208, 0.41)
+
 
 body
   background $backgroundColor
@@ -311,48 +324,53 @@ header
   .track-word
     margin-right 4px
     color rgba(0,0,0,.5)
-    font-size 17px
+    font-size 16px
+  .big-word
+    color black
+    font-size 20px
     &:last-of-type
       margin 0px
-  .big-word
-    //font-size 21px
-    color black
-    font-weight 500
-  .sad-word
-    background-color $lightBlue
-    padding 0 3px
 .results
   display flex
-  margin-top 20px
+  margin-top 30px
   font-family $atlas
   .break-down
     margin 0
     font-size 14px
-    span
+    color black
+    .sad-breakdown
       //color $sadBlue
       margin 0px
       //background $lightBlue
       font-weight 500
       //padding 0 3px
+      background-color rgba(81, 215, 255, 0.31)
+      padding 0 4px
+      border-bottom 3px solid rgba(69, 176, 208, 0.41)
+    .all-breakdown
+      background-color rgba(220,220,220,0.31)
+      padding 0 4px
+      border-bottom 3px solid #c5c5c5
+      font-weight 500
   .percent
     //color $sadBlue
     margin 0px
-    font-weight 600
-    font-size 14px
-    margin-right 10px
-    padding-right 10px
+    font-weight 500
+    font-size 16px
+    margin-right 5px
+    padding-right 5px
     border-right 3px solid #D2D2D2
     span
-      background $lightBlue
-      padding 2px 5px
-      margin-right 4px
+      //background $lightBlue
+      //padding 2px 5px
+      //margin-right 2px
 
 .explanation
   //width 633px
   margin 0 auto
   margin-top 4rem
   position relative
-  margin-bottom 3rem
+  margin-bottom 5rem
   .left-col
     width 300px
     .prose
@@ -368,8 +386,8 @@ header
       span
         font-family $atlas
         margin 0
-        color #666666
-        border-bottom 2px solid #EBEBEB
+        color #333
+        border-bottom 2px solid #bbbbbb
         padding-bottom 5px
     .track-content
       margin-top 20px

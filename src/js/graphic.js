@@ -210,13 +210,13 @@ function init() {
 	results.append("p")
 		.attr("class","percent")
 		.html(function(){
-			return "<span>38%</span> sad"
+			return "<span>33%</span> emo"
 		})
 
 	results.append("p")
 		.attr("class","break-down")
 		.html(function(){
-			return "<span>4 sad words</span> of <b>11</b> total words"
+			return "<span class='sad-breakdown'>4 emo words</span> of <span class='all-breakdown'>12 total words</span>"
 		})
 
 	var songHidden = true;
@@ -323,12 +323,12 @@ function init() {
 				.attr("class","results")
 			fullSongResults.append("p")
 				.attr("class","percent")
-				.html("<span>"+Math.round(totalSadWords/totalWords*100)+"%</span> sad")
+				.html("<span>"+Math.round(totalSadWords/totalWords*100)+"%</span> emo")
 				;
 
 			fullSongResults.append("p")
 				.attr("class","break-down")
-				.html("<span>"+totalSadWords+" sad words</span> of <b>"+totalWords+"</b> total words")
+				.html("<span>"+totalSadWords+" emo words</span> of <b>"+totalWords+"</b> total words")
 				;
 
 			let topTracks = trackData.sort(function(a,b){
@@ -831,7 +831,7 @@ function init() {
 								.each(function(d,i){
 									if(i==1){
 										var percent = d3.select(this).text();
-										d3.select(this).html(percent+" <span>sad words</span>")
+										d3.select(this).html(percent+" <span>emo words</span>")
 									}
 								})
 								;
@@ -914,7 +914,7 @@ function init() {
 				.attr("y",height+15)
 				.attr("class","axis-text")
 				.selectAll("tspan")
-				.data(["Least Sad","Lyrics"])
+				.data(["Least Emo","Lyrics"])
 				.enter()
 				.append("tspan")
 				.attr("dy",function(d,i){
@@ -962,7 +962,7 @@ function init() {
 				.style("alignment-baseline","text-after-edge")
 				.style("dominant-baseline","text-after-edge")
 				.selectAll("tspan")
-				.data([Math.round(minAmount*100)+"%","Sad"])
+				.data([Math.round(minAmount*100)+"%","Emo"])
 				.enter()
 				.append("tspan")
 				.attr("dy",function(d,i){
@@ -1037,8 +1037,8 @@ function init() {
 				.append("line")
 				.attr("x1",rectWidth+rectWidthGap)
 				.attr("x2", emoHeadText.node().getBBox().width+rectWidthGap+rectWidth+rectWidthGap)
-				.attr("y1",5)
-				.attr("y2",5)
+				.attr("y1",7)
+				.attr("y2",7)
 				.attr("class","axis-head-line")
 				;
 
@@ -1046,8 +1046,8 @@ function init() {
 				.append("line")
 				.attr("x1",-rectWidthGap)
 				.attr("x2", -hipHopText.node().getBBox().width-rectWidthGap-(rectWidthGap))
-				.attr("y1",5)
-				.attr("y2",5)
+				.attr("y1",7)
+				.attr("y2",7)
 				.attr("class","axis-head-line")
 				;
 
