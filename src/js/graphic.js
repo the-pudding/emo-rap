@@ -7,11 +7,14 @@ function init() {
 
 	var viewportWidth = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
 	var viewportHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
-
-	var otherHipHopColor = "#2EB494"
-	var otherRockColor = "#5935A7"
-	var otherHipHopBackgruondColor = "#FCFCFC" //"rgba(99, 195, 172, 0.16)"
-	var otherEmoBackgroundColor = "#FCFCFC" //"rgba(161, 66, 173, 0.1)"
+	let singleSided = false;
+	if(viewportWidth < 450){
+		singleSided = true;
+	}
+	var otherHipHopColor = "#5a5f67"
+	var otherRockColor = "#5a5f67"
+	var otherHipHopBackgruondColor = "rgba(230,230,230,0)" //"rgba(99, 195, 172, 0.16)"
+	var otherEmoBackgroundColor = "rgba(230,230,230,0)" //"rgba(161, 66, 173, 0.1)"
 	var lucidDreamsAudio = document.getElementById("lucid-dreams");
 
 	var audioControls = d3.select(".audio-controls")
@@ -508,6 +511,9 @@ function init() {
 			if(viewportWidth < 600){
 				crossWalk["where_you"].album = "where you..."
 				crossWalk["takingback"].album = "tell all..."
+				crossWalk["jimmyeatworld"].album = "Bleed..."
+				crossWalk["kidcudi"].album = "Man on..."
+
 			}
 			const margin = {"top":50,"bottom":0,"left":0,"right":0};
 			let width = 960-margin.left-margin.top;
@@ -573,7 +579,6 @@ function init() {
 				.style("transform","translate(0,calc(-50% - 4px))")
 				;
 
-
 		  let dataFiltered = data
 				.filter(function(d){ return toRemove.indexOf(d.artist) == -1})
 				;
@@ -581,13 +586,15 @@ function init() {
 
 			let dataNested = d3.nest()
 				.key(function(d){
+					if(singleSided){
+						return "all-bands"
+					}
 					if(emoBands.indexOf(d.artist) == -1){
 						return "hiphop";
 					}
 					return "emo"
 				})
 				.key(function(d){
-
 					return Math.round(+d.percents*roundAmount)/roundAmount;
 				})
 				.entries(dataFiltered)
@@ -597,7 +604,12 @@ function init() {
 				.append("g")
 				.attr("transform","translate("+margin.left+","+margin.top+")")
 				.append("g")
-				.attr("transform","translate("+(width/2 - rectWidth/2)+",0)")
+				.attr("transform",function(d){
+					if(singleSided){
+						return "translate(0,0)"
+					}
+					return "translate("+(width/2 - rectWidth/2)+",0)";
+				})
 				;
 
 
@@ -658,23 +670,24 @@ function init() {
 		      return yScale(Math.round(+d.percents*roundAmount)/roundAmount);
 		    })
 		    .style("text-anchor",function(d){
-		      if(emoBands.indexOf(d.artist) == -1){
+		      if(emoBands.indexOf(d.artist) == -1 && !singleSided){
 		        return "end";
 		      }
 		      return "start";
 		    })
 		    ;
 
-		  textElements.append("tspan").attr("class",function(d){
+		  textElements.append("tspan")
+				.attr("class",function(d){
 					 var artistInfo = crossWalk[d.artist]
-					 if(emoBands.indexOf(d.artist) == -1){
+					 if(emoBands.indexOf(d.artist) == -1 && !singleSided){
 						 return "album-index";
 					 }
 					 return "artist-index";
 				})
 		    .text(function(d,i){
 		      var artistInfo = crossWalk[d.artist]
-		      if(emoBands.indexOf(d.artist) == -1){
+		      if(emoBands.indexOf(d.artist) == -1 && !singleSided){
 		        return artistInfo["album"];
 		      }
 		      return artistInfo["artist"];
@@ -684,7 +697,7 @@ function init() {
 			textElements.append("tspan")
 				.attr("class",function(d){
 					var artistInfo = crossWalk[d.artist]
-					if(emoBands.indexOf(d.artist) == -1){
+					if(emoBands.indexOf(d.artist) == -1 && !singleSided){
 						return "artist-index";
 					}
 					return "album-index";
@@ -694,7 +707,7 @@ function init() {
 				})
 				.text(function(d,i){
 					var artistInfo = crossWalk[d.artist]
-					if(emoBands.indexOf(d.artist) == -1){
+					if(emoBands.indexOf(d.artist) == -1 && !singleSided){
 						return artistInfo["artist"];
 					}
 					return artistInfo["album"];
@@ -702,9 +715,6 @@ function init() {
 				;
 
 			percentGs
-				// .filter(function(d){
-				// 	return emoBands.indexOf(d.values[0].artist) > -1
-				// })
 				.append("g")
 				.append("text")
 				.attr("class","emo-band-hover-percent")
@@ -735,7 +745,7 @@ function init() {
 						var additionalSpacing = 12;
 						var percents = d.percents;
 						var artist = d.artist;
-						if(emoBands.indexOf(d.artist) == -1){
+						if(emoBands.indexOf(d.artist) == -1 && !singleSided){
 							direction = -1;
 							var offsetRect = -rectWidthGap
 						}
@@ -763,7 +773,7 @@ function init() {
 									return null;
 								})
 								.attr("x",function(d){
-									if(emoBands.indexOf(artist) == -1){
+									if(emoBands.indexOf(artist) == -1 && !singleSided){
 										return (offsetRect+direction*arrayOffset[count-1]+additionalSpacing*direction)-(arrayOffset[count]+4)
 									}
 									return offsetRect+direction*arrayOffset[count-1]+additionalSpacing*direction-4
@@ -798,7 +808,7 @@ function init() {
 									return "emo-rect"
 								})
 								.attr("x",function(d){
-									if(emoBands.indexOf(artist) == -1){
+									if(emoBands.indexOf(artist) == -1  && !singleSided){
 										return (offsetRect+direction*(arrayOffset[count-1]+arrayOffset[count-2])+additionalSpacing*direction*2)-(arrayOffset[count]+4)
 									}
 									return offsetRect+direction*(arrayOffset[count-1]+arrayOffset[count-2])+additionalSpacing*direction*2
@@ -839,7 +849,7 @@ function init() {
 									return null;
 								})
 								.attr("x",function(d){
-									if(emoBands.indexOf(artist) == -1){
+									if(emoBands.indexOf(artist) == -1 && !singleSided){
 										return (offsetRect)-(arrayOffset[count]+4)
 									}
 									return offsetRect-4
@@ -949,14 +959,6 @@ function init() {
 
 					});
 				})
-				// .attr("x",function(d,i){
-				// 	console.log(d);
-				// 	var count = i;
-				// 	if(emoBands.indexOf(d.artist) == -1){
-				// 		return -10 - i*50;
-				// 	}
-				// 	return rectWidth + 10 + i*50;
-				// })
 				;
 
 
@@ -1072,7 +1074,7 @@ function init() {
 
 			emoHeadText.append("tspan")
 				.attr("dx",5)
-				.attr("dy",3)
+				.attr("dy",1)
 				.attr("class","other-genre")
 				.style("fill",otherRockColor)
 				.text("Other rock")
@@ -1080,17 +1082,53 @@ function init() {
 
 			var hipHopText = axisText
 				.append("text")
-				.attr("x",-rectWidthGap)
-				.attr("y",0)
+				.attr("x",function(d){
+					if(singleSided){
+						return rectWidth+rectWidthGap
+					}
+					return -rectWidthGap
+				})
+				.attr("y",function(d){
+					if(singleSided){
+						return 30;
+					}
+					return 0;
+				})
 				.attr("class","axis-head hip-hop-head")
-				.attr("text-anchor","end")
+				.attr("text-anchor",function(d){
+					if(singleSided){
+						return "start"
+					}
+					return "end"
+				})
 				;
 
+
 			hipHopText.append("tspan")
-				.text("other hip hop")
-				.style("fill",otherHipHopColor)
-				.attr("class","other-genre")
-				.attr("dx",-8)
+				.text(function(d){
+					if(singleSided){
+						return "Emo-rap"
+					}
+					return "other hip hop"
+				})
+				.style("fill",function(d){
+					if(singleSided){
+						return null;
+					}
+					return otherHipHopColor;
+				})
+				.attr("class",function(d){
+					if(singleSided){
+						return null;
+					}
+					return "other-genre"
+				})
+				.attr("dx",function(d){
+					if(singleSided){
+						return 8
+					}
+					return -8;
+				})
 				//.attr("dy",-3)
 				;
 
@@ -1102,9 +1140,36 @@ function init() {
 				;
 
 			hipHopText.append("tspan")
-				.text("Emo-rap")
-				.attr("dx",5)
-				.attr("dy",3)
+				.text(function(d){
+					if(singleSided){
+						return "other hip hop"
+					}
+					return "Emo-rap"
+				})
+				.attr("dx",function(d){
+					if(singleSided){
+						return 5;
+					}
+					return 5
+				})
+				.attr("class",function(d){
+					if(singleSided){
+						return "other-genre";
+					}
+					return null;
+				})
+				.style("fill",function(d){
+					if(singleSided){
+						return otherHipHopColor;
+					}
+					return null;
+				})
+				.attr("dy",function(d){
+					if(singleSided){
+						return 1;
+					}
+					return 3
+				})
 				;
 
 			axisText
@@ -1123,6 +1188,12 @@ function init() {
 				.attr("y1",7)
 				.attr("y2",7)
 				.attr("class","axis-head-line")
+				.style("display",function(d){
+					if(singleSided){
+						return "none";
+					}
+					return null;
+				})
 				;
 
 			var progressMap = d3.scaleLinear().domain([0,1]).range([d3.max(data,function(d){return +d.percents;}),.04815714285714286]);

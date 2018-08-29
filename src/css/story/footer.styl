@@ -10,6 +10,15 @@ footer
 		flex-wrap wrap
 		max-width 633px
 		width 100%
+		@media (max-width: 400px)
+			p
+				max-width 90%
+				margin 0 auto
+			a
+				max-width 90%
+				width 100%
+				margin 0 auto
+				margin-top 2rem
 		p
 			max-width calc(100% - 300px)
 			margin-right 2rem
@@ -69,6 +78,7 @@ footer
 				border-top 3px solid #28115a
 			a
 				color darken(#28115a, 10)
+				font-weight 400
 				&:hover
 					color #28115a
 		// align-items center
@@ -131,6 +141,9 @@ footer
 				float left
 				font-size 12px
 				font-weight 500
+				margin-bottom .5rem
+				&:last-of-type
+					margin-right 0px
 			a
 				text-transform uppercase
 				text-decoration none
