@@ -1,4 +1,51 @@
 /* CUSTOM STORY STYLE */
+.post-hidden
+  height 100px
+  overflow hidden
+  position relative
+  .overlay
+    background linear-gradient(to bottom, rgba(252,252,252,.7) 0%, $backgroundColor 100%);
+    position absolute
+    top 0px
+    height 100%
+    width 100%
+    left 0px
+    z-index 1
+.read-more-button
+  margin 0 auto
+  display flex
+  justify-content center
+
+  button
+    background-color #e8e8e9
+    border-radius 3px
+    padding 0px 12px
+    padding-top 7px
+    padding-bottom 7px
+    padding-left 4px
+    width 240px
+    display flex
+    justify-content center
+    cursor hand
+    cursor pointer
+    margin-bottom 3rem
+    svg
+      width 30px
+      stroke #4a4a4a
+    p
+      font-size 13px
+      margin 0 auto
+      font-family $atlas
+      color #4a4a4a
+      font-weight 500
+      margin-left 5px
+      line-height 24px
+      span
+        text-transform uppercase
+        font-weight 600
+        margin-left 10px
+        font-size 11.9px
+        letter-spacing .4px
 
 .title
   width 600px

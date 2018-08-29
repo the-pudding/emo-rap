@@ -3,6 +3,11 @@
 function resize() {}
 
 function init() {
+	d3.select(".read-more-button").select("button").on("click",function(d){
+		d3.select(".post-read-more")
+			.classed("post-hidden",false)
+		d3.select(this.parentNode).remove();
+	})
 
 
 	var viewportWidth = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
