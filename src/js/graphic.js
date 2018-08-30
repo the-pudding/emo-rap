@@ -16,14 +16,18 @@ function init() {
 			newAudio = "https://p.scdn.co/mp3-preview/7add10ee576e9017030c09aa6d8bcaf682714859";
 		}
 
+
+
 		//
 		if(!audio.paused && srcAudio == newAudio){
 			audio.pause();
+			d3.selectAll(".audio-play").classed("playing",false)
 		}
 		else{
 			audio.src = newAudio;
 			if(newAudio != "none"){
 				audio.play();
+				d3.select(this).classed("playing",true)
 			}
 		}
 	})

@@ -1,3 +1,6 @@
+
+
+
 .audio-play
   margin-left 5px
   cursor hand
@@ -10,7 +13,13 @@
     path
       stroke #666
 
-
+.playing
+  svg
+    polygon
+      fill #18604f
+      stroke #18604f
+    path
+      stroke #18604f
 
 /* CUSTOM STORY STYLE */
 .post-hidden
@@ -267,6 +276,7 @@
   display none
   @media (max-width 1000px)
     padding-left 0px
+    overflow hidden
   .track-line
     line-height 1.7
     .track-word
@@ -275,6 +285,7 @@
 .saddest-songs-wrapper
   width 100%
   overflow hidden
+  padding-bottom 3rem
   .see-more
     width 200px
     margin 0 auto
