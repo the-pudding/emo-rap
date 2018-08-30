@@ -1,16 +1,16 @@
 {
-	"title": "Title Case Headline Goes Here",
+	"title": "The Most Emo Lyrics: Emo Rap vs. Dashboard Confessional",
 	"description":
-		"Your dek goes here. It is probably one or two sentences that succinctly describe more explicitly what the story will be about.",
-	"url": "https://pudding.cool/year/month/name/",
-	"keywords": "tk",
+		"Who has the most emotionally vulnerable lyrics, emo rappers or Dashboard Confessional? Has Juice Wrld out-emo’d emo bands?",
+	"url": "https://pudding.cool/2018/08/emo-rap/",
+	"keywords": "emo",
 	"imgFacebook":
-		"https://pudding.cool/year/month/name/assets/social/social-facebook.jpg",
+		"https://pudding.cool/2018/08/emo-rap/assets/social/facebook.png",
 	"imgTwitter":
-		"https://pudding.cool/year/month/name/assets/social/social-twitter.jpg",
+		"https://pudding.cool/2018/08/emo-rap/assets/social/twitter.png",
 	"author": {
-		"name": "Author Name",
-		"url": "https://twitter.com/puddingviz",
-		"twitterHandle": "@puddingviz"
+		"name": "Matt Daniels",
+		"url": "https://twitter.com/matthew_daniels",
+		"twitterHandle": "@matthew_daniels"
 	}
 }

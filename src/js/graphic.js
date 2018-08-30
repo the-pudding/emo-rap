@@ -6,13 +6,36 @@ function resize() {}
 
 function init() {
 
+	var audio = document.createElement('audio');
+	audio.src = 'https://p.scdn.co/mp3-preview/208f2aedf7f913e69194e921eb354502c3f63dee'
+
+	d3.selectAll(".audio-play").on("click",function(d,i){
+		var srcAudio = audio.src;
+		var newAudio = "https://p.scdn.co/mp3-preview/8963ef789499f72e9e10716bb431429877ff0ab7";
+		if(i==1){
+			newAudio = "https://p.scdn.co/mp3-preview/7add10ee576e9017030c09aa6d8bcaf682714859";
+		}
+
+		//
+		if(!audio.paused && srcAudio == newAudio){
+			audio.pause();
+		}
+		else{
+			audio.src = newAudio;
+			if(newAudio != "none"){
+				audio.play();
+			}
+		}
+	})
+
+
+
 	let more = true;
 	if(Math.random() < .5){
 		more = false;
 		d3.select(".read-more-button").remove();
 	}
 
-	console.log(more);
 	tracker.send({category: `read a/b ${more ? 'yes' : 'no'}`, action: 'init', once: true});
 
 	d3.select(".post-read-more").classed("post-hidden", more)
@@ -374,7 +397,7 @@ function init() {
 				.entries(topTracks),function(d){return d.key});
 
 			const otherRock = ["black_parade","panic","pilots","radiohead","queen"];
-			const emoBands = ["panic","football","the_used","straylight","braid","sunny","queen","pilots","where_you","black_parade","dashboard","radiohead","takingback","chemicalromance","fall out boy","jimmyeatworld","paramore","brandnew"];
+			const emoBands = ["saves","panic","football","the_used","straylight","braid","sunny","queen","pilots","where_you","black_parade","dashboard","radiohead","takingback","chemicalromance","fall out boy","jimmyeatworld","paramore","brandnew"];
 			const otherHipHop = ["kanye college_dropout","tyler","lilpump","migos","earl_sweatshirt","postmalone","weeknd","kidcudi","kanye heartbreak","drake","future","kanye ye","young thug"];
 		  let crossWalk = {
 			  "dashboard": {
@@ -566,12 +589,17 @@ function init() {
 				crossWalk["takingback"].album = "tell all..."
 				crossWalk["jimmyeatworld"].album = "Bleed..."
 				crossWalk["kidcudi"].album = "Man on..."
+				crossWalk["lilpeep"].album = "Come Over..."
+				crossWalk["straylight"].album = "self-titled"
+				crossWalk["queen"].album = "queen..."
+				crossWalk["football"].album = "self-titled"
+
 
 			}
 			const margin = {"top":50,"bottom":0,"left":0,"right":0};
 			let width = 960-margin.left-margin.top;
 			if(viewportWidth < 960){
-				width = viewportWidth-margin.left-margin.top;
+				width = (viewportWidth-20)-margin.left-margin.right;
 			}
 			let height = 700-margin.top-margin.bottom;
 			if(viewportWidth < 1000){
@@ -598,9 +626,6 @@ function init() {
 			}
 			var roundAmount = 150
 			if(viewportWidth < 1000){
-				roundAmount = 500
-			}
-			if(viewportWidth < 550){
 				roundAmount = 500
 			}
 
@@ -817,7 +842,6 @@ function init() {
 								})
 								.style("fill",function(d){
 									if(otherHipHop.indexOf(artist) > -1){
-										console.log(artist,otherHipHopBackgruondColor);
 										return otherHipHopBackgruondColor
 									}
 									if(otherRock.indexOf(artist) > -1){
@@ -1030,8 +1054,18 @@ function init() {
 					}
 					return 0;
 				})
-				.attr("x",rectWidth/2)
-				.attr("text-anchor","middle")
+				.attr("x",function(d){
+					if(singleSided){
+						return "-5"
+					}
+					return rectWidth/2;
+				})
+				.attr("text-anchor",function(d){
+					if(singleSided){
+						return "start"
+					}
+					return "middle";
+				})
 				.text(function(d){
 					return d;
 				})
@@ -1052,8 +1086,18 @@ function init() {
 					}
 					return 0;
 				})
-				.attr("x",rectWidth/2)
-				.attr("text-anchor","middle")
+				.attr("x",function(d){
+					if(singleSided){
+						return "-5"
+					}
+					return rectWidth/2;
+				})
+				.attr("text-anchor",function(d){
+					if(singleSided){
+						return "start"
+					}
+					return "middle";
+				})
 				.text(function(d){
 					return d;
 				})
@@ -1110,7 +1154,12 @@ function init() {
 			var emoHeadText = axisText
 				.append("text")
 				.attr("x",rectWidth+rectWidthGap)
-				.attr("y",0)
+				.attr("y",function(d){
+					if(singleSided){
+						return 10
+					}
+					return 0;
+				})
 				.attr("class","axis-head emo-head")
 				;
 			emoHeadText.append("tspan")
@@ -1127,7 +1176,12 @@ function init() {
 
 			emoHeadText.append("tspan")
 				.attr("dx",5)
-				.attr("dy",1)
+				.attr("dy",function(d){
+					if(singleSided){
+						return 1
+					}
+					return 3
+				})
 				.attr("class","other-genre")
 				.style("fill",otherRockColor)
 				.text("Other rock")
@@ -1143,7 +1197,7 @@ function init() {
 				})
 				.attr("y",function(d){
 					if(singleSided){
-						return 30;
+						return 40;
 					}
 					return 0;
 				})
@@ -1160,7 +1214,7 @@ function init() {
 			hipHopText.append("tspan")
 				.text(function(d){
 					if(singleSided){
-						return "Emo-rap"
+						return "Emo rap"
 					}
 					return "other hip hop"
 				})
@@ -1197,7 +1251,7 @@ function init() {
 					if(singleSided){
 						return "other hip hop"
 					}
-					return "Emo-rap"
+					return "Emo rap"
 				})
 				.attr("dx",function(d){
 					if(singleSided){
@@ -1229,8 +1283,18 @@ function init() {
 				.append("line")
 				.attr("x1",rectWidth+rectWidthGap)
 				.attr("x2", emoHeadText.node().getBBox().width+rectWidthGap+rectWidth+rectWidthGap)
-				.attr("y1",7)
-				.attr("y2",7)
+				.attr("y1",function(d){
+					if(singleSided){
+						return 17;
+					}
+					return 7
+				})
+				.attr("y2",function(d){
+					if(singleSided){
+						return 17;
+					}
+					return 7
+				})
 				.attr("class","axis-head-line")
 				;
 
@@ -1311,7 +1375,6 @@ function init() {
 				})
 				.on("click",function(d){
 					var trackWordData = trackLines.get(d.track_title+"$"+d.artist);
-					console.log(trackWordData);
 				})
 				;
 
