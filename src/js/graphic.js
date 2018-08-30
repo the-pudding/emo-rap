@@ -6,7 +6,13 @@ function resize() {}
 
 function init() {
 
-	const more = Math.random() < 0.5
+	let more = true;
+	if(Math.random() < .5){
+		more = false;
+		d3.select(".read-more-button").remove();
+	}
+
+	console.log(more);
 	tracker.send({category: `read a/b ${more ? 'yes' : 'no'}`, action: 'init', once: true});
 
 	d3.select(".post-read-more").classed("post-hidden", more)
@@ -367,8 +373,8 @@ function init() {
 			let tracksByArtist = d3.map(d3.nest().key(function(d){ return d.artist; })
 				.entries(topTracks),function(d){return d.key});
 
-			const otherRock = ["pilots","radiohead","queen"];
-			const emoBands = ["football","the_used","straylight","braid","sunny","queen","pilots","where_you","black_parade","dashboard","radiohead","takingback","chemicalromance","fall out boy","jimmyeatworld","paramore","brandnew"];
+			const otherRock = ["black_parade","panic","pilots","radiohead","queen"];
+			const emoBands = ["panic","football","the_used","straylight","braid","sunny","queen","pilots","where_you","black_parade","dashboard","radiohead","takingback","chemicalromance","fall out boy","jimmyeatworld","paramore","brandnew"];
 			const otherHipHop = ["kanye college_dropout","tyler","lilpump","migos","earl_sweatshirt","postmalone","weeknd","kidcudi","kanye heartbreak","drake","future","kanye ye","young thug"];
 		  let crossWalk = {
 			  "dashboard": {
@@ -378,6 +384,10 @@ function init() {
 				"pilots": {
 					"artist": "twenty one pilots",
 					"album": "vessel"
+				},
+				"panic": {
+					"artist": "Panic at the Disco",
+					"album": "A Fever You Can't Sweat Out"
 				},
 		    "radiohead": {
 				  "artist": "Radiohead",
