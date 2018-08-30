@@ -1,9 +1,21 @@
+
+import tracker from './utils/tracker.js'
 /* global d3 */
 
 function resize() {}
 
 function init() {
+
+	var randomNum = Math.random();
+	if(randomNum > .5){
+		tracker.send({category: 'NoReadMore', action: 'click', once: true});
+
+		d3.select(".post-read-more")
+			.classed("post-hidden",false)
+	}
+
 	d3.select(".read-more-button").select("button").on("click",function(d){
+		tracker.send({category: 'readMore', action: 'click', once: true});
 		d3.select(".post-read-more")
 			.classed("post-hidden",false)
 		d3.select(this.parentNode).remove();
@@ -274,7 +286,7 @@ function init() {
 				return d.key;
 			});
 
-			const toRemove = ["nothing_ruiner","deathgrips","drake","chemicalromance"];
+			const toRemove = ["nothing_ruiner","deathgrips","drake","chemicalromance","where_you","paramore"];
 
 			const xoWordsMap = d3.map(xoWords,function(d){
 				return d.word;
@@ -357,8 +369,8 @@ function init() {
 			let tracksByArtist = d3.map(d3.nest().key(function(d){ return d.artist; })
 				.entries(topTracks),function(d){return d.key});
 
-			const otherRock = ["pilots","radiohead"];
-			const emoBands = ["pilots","where_you","black_parade","dashboard","radiohead","takingback","chemicalromance","fall out boy","jimmyeatworld","paramore","brandnew"];
+			const otherRock = ["pilots","radiohead","queen"];
+			const emoBands = ["football","the_used","straylight","braid","sunny","queen","pilots","where_you","black_parade","dashboard","radiohead","takingback","chemicalromance","fall out boy","jimmyeatworld","paramore","brandnew"];
 			const otherHipHop = ["kanye college_dropout","tyler","lilpump","migos","earl_sweatshirt","postmalone","weeknd","kidcudi","kanye heartbreak","drake","future","kanye ye","young thug"];
 		  let crossWalk = {
 			  "dashboard": {
@@ -508,6 +520,34 @@ function init() {
 				"where_you": {
 					"artist": "Taking Back Sunday",
 					"album": "Where You Want To Be"
+				},
+				"queen": {
+					"artist": "The Smiths",
+					"album": "Queen is Dead"
+				},
+				"saves": {
+					"artist": "Saves the Day",
+					"album": "Stay What You Are"
+				},
+				"football": {
+					"artist": "American Football",
+					"album": "American Football"
+				},
+				"the_used": {
+					"artist": "The Used",
+					"album": "In Love and Death"
+				},
+				"straylight": {
+					"artist": "Straylight Run",
+					"album": "Straylight Run"
+				},
+				"braid": {
+					"artist": "Braid",
+					"album": "Frame Canvas"
+				},
+				"sunny": {
+					"artist": "Sunny Day Real Estate",
+					"album": "Diary"
 				}
 			}
 			if(viewportWidth < 750){
