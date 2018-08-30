@@ -6,18 +6,16 @@ function resize() {}
 
 function init() {
 
-	var randomNum = Math.random();
-	if(randomNum > .5){
-		tracker.send({category: 'NoReadMore', action: 'click', once: true});
+	const more = Math.random() < 0.5
+	tracker.send({category: `read a/b ${more ? 'yes' : 'no'}`, action: 'init', once: true});
 
-		d3.select(".post-read-more")
-			.classed("post-hidden",false)
-	}
+	d3.select(".post-read-more").classed("post-hidden", more)
+	d3.select('.patreon--yes').classed('is-visible', more)
+	d3.select('.patreon--no').classed('is-visible', !more)
 
 	d3.select(".read-more-button").select("button").on("click",function(d){
-		tracker.send({category: 'readMore', action: 'click', once: true});
-		d3.select(".post-read-more")
-			.classed("post-hidden",false)
+		tracker.send({category: 'read more', action: 'click', once: true});
+		d3.select(".post-read-more").classed("post-hidden",false)
 		d3.select(this.parentNode).remove();
 	})
 
